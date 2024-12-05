@@ -1,0 +1,312 @@
+[gd_scene load_steps=20 format=3 uid="uid://y05b75huivnx"]
+
+[ext_resource type="PackedScene" uid="uid://cn67okvkd2f32" path="res://player.tscn" id="1_h4dh1"]
+[ext_resource type="Script" path="res://world.gd" id="1_vpan0"]
+[ext_resource type="PackedScene" uid="uid://bucc0kbtqitj2" path="res://platform.tscn" id="2_adxvl"]
+[ext_resource type="Script" path="res://killbox.gd" id="4_v6apa"]
+[ext_resource type="Script" path="res://platform_spawner.gd" id="5_urkof"]
+[ext_resource type="Script" path="res://death_screen.gd" id="6_uiebt"]
+[ext_resource type="Texture2D" uid="uid://bw3jt1bvbtota" path="res://sprites/background/Clouds/Clouds 4/3.png" id="7_cdoa6"]
+[ext_resource type="Texture2D" uid="uid://dckjfr6sekl82" path="res://sprites/background/Clouds/Clouds 4/4.png" id="7_fq2pa"]
+[ext_resource type="Texture2D" uid="uid://bmqqwrpgx5m15" path="res://sprites/background/Clouds/Clouds 3/3.png" id="7_qlkll"]
+[ext_resource type="Texture2D" uid="uid://dcmedae6gtm42" path="res://sprites/background/Clouds/Clouds 4/1.png" id="7_wineq"]
+[ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="7_ys0ig"]
+[ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="8_6c13d"]
+[ext_resource type="Texture2D" uid="uid://cf48bddamhdfi" path="res://sprites/background/Clouds/Clouds 3/4.png" id="8_ac234"]
+[ext_resource type="Texture2D" uid="uid://cewl0es61utbo" path="res://sprites/background/Clouds/Clouds 1/4.png" id="9_r1d76"]
+[ext_resource type="Texture2D" uid="uid://b3k1whxeehvhr" path="res://sprites/background/Clouds/Clouds 3/1.png" id="11_8a6o5"]
+[ext_resource type="Script" path="res://height_line_2d.gd" id="16_a84p8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j5h1"]
+size = Vector2(899, 370)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7uivt"]
+size = Vector2(360, 640)
+
+[sub_resource type="Gradient" id="Gradient_kb3kx"]
+offsets = PackedFloat32Array(0, 0.156085, 0.81746, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_vpan0")
+
+[node name="Player" parent="." instance=ExtResource("1_h4dh1")]
+position = Vector2(192, 320)
+scale = Vector2(2, 2)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(180, 320)
+position_smoothing_enabled = true
+
+[node name="killzone" type="Area2D" parent="Camera2D"]
+position = Vector2(-4, 8)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("4_v6apa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/killzone"]
+position = Vector2(-4, 536)
+shape = SubResource("RectangleShape2D_1j5h1")
+
+[node name="PlatformSpawner" type="Node2D" parent="Camera2D"]
+position = Vector2(0, -385)
+script = ExtResource("5_urkof")
+
+[node name="Area2D" type="Area2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(0, -290)
+collision_layer = 0
+
+[node name="spawn_area" type="CollisionShape2D" parent="Camera2D/PlatformSpawner/Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_7uivt")
+
+[node name="PlatformRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(-176, 24)
+
+[node name="Platform" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(176, 624)
+scale = Vector2(4, 1)
+
+[node name="Platform2" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(288, 392)
+
+[node name="Platform5" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(72, 480)
+
+[node name="Platform12" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(272, 464)
+
+[node name="Platform13" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(136, 272)
+
+[node name="Platform15" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(56, 112)
+
+[node name="Platform6" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(64, 344)
+
+[node name="Platform16" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(280, 120)
+
+[node name="Platform8" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(264, 240)
+
+[node name="Platform10" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(80, 48)
+
+[node name="Platform3" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(88, 208)
+
+[node name="Platform4" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(272, 40)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_right = 61.0
+offset_bottom = 23.0
+text = "Score: 0"
+
+[node name="DeathScreen" type="CenterContainer" parent="UI"]
+visible = false
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_uiebt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathScreen"]
+z_index = 3
+layout_mode = 2
+
+[node name="Scores" type="Label" parent="UI/DeathScreen/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+uppercase = true
+max_lines_visible = 6
+
+[node name="Label" type="Label" parent="UI/DeathScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalScoreLabel" type="Label" parent="UI/DeathScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "9999999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/DeathScreen/VBoxContainer"]
+z_index = 10
+layout_mode = 2
+alignment = 1
+
+[node name="RetryButton" type="Button" parent="UI/DeathScreen/VBoxContainer/HBoxContainer"]
+z_index = 20
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "RETRY"
+
+[node name="ExitButton" type="Button" parent="UI/DeathScreen/VBoxContainer/HBoxContainer"]
+z_index = 20
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "EXIT"
+
+[node name="ColorRect" type="ColorRect" parent="UI/DeathScreen"]
+z_index = 1
+custom_minimum_size = Vector2(600, 700)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.364706)
+
+[node name="BGCanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Parallax" type="ParallaxBackground" parent="BGCanvasLayer"]
+visible = false
+
+[node name="CloudsNightLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+z_index = 20
+position = Vector2(296, -13104)
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsNightLayer"]
+position = Vector2(8, 0)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("7_qlkll")
+
+[node name="CloudsNightLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+z_index = 20
+position = Vector2(280, -13096)
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsNightLayer2"]
+position = Vector2(8, 0)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("8_ac234")
+
+[node name="CloudsSunsetLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+z_index = 20
+position = Vector2(160, -7176)
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsSunsetLayer2"]
+position = Vector2(8, 0)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("7_cdoa6")
+
+[node name="CloudsSunsetLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+z_index = 20
+position = Vector2(160, -7176)
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsSunsetLayer"]
+position = Vector2(8, 0)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("7_fq2pa")
+
+[node name="SkyNightLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+z_index = 2
+position = Vector2(-1024, -1240)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 600)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkyNightLayer"]
+scale = Vector2(4, 4)
+texture = ExtResource("11_8a6o5")
+centered = false
+
+[node name="SkySunsetLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1024, -1544)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 1000)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkySunsetLayer"]
+scale = Vector2(4, 4)
+texture = ExtResource("7_wineq")
+centered = false
+
+[node name="SkyDayLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+position = Vector2(-1024, -1544)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 900)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkyDayLayer"]
+scale = Vector2(4, 4)
+texture = ExtResource("7_ys0ig")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+position = Vector2(-536, -896)
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="2" type="Sprite2D" parent="BGCanvasLayer/Parallax/ParallaxLayer2"]
+position = Vector2(1152, 656)
+scale = Vector2(4, 4)
+texture = ExtResource("8_6c13d")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+position = Vector2(-784, -656)
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="3" type="Sprite2D" parent="BGCanvasLayer/Parallax/ParallaxLayer3"]
+position = Vector2(1160, 656)
+scale = Vector2(4, 4)
+texture = ExtResource("9_r1d76")
+
+[node name="ColorRect" type="ColorRect" parent="BGCanvasLayer"]
+visible = false
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.294757, 0.531257, 0.757094, 1)
+
+[node name="HeightLine2D" type="Line2D" parent="."]
+z_index = -2
+position = Vector2(-40, 320)
+points = PackedVector2Array(0, 0, 96, 0, 344, 0, 440, 0)
+width = 1.0
+default_color = Color(1, 1, 1, 0)
+gradient = SubResource("Gradient_kb3kx")
+script = ExtResource("16_a84p8")
+
+[node name="HeightLineLabel" type="Label" parent="HeightLine2D"]
+offset_left = 40.0
+offset_top = -13.0
+offset_right = 80.0
+offset_bottom = -1.0
+theme_override_font_sizes/font_size = 8
+text = "000000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.36
+blend_mode = 2
+shadow_color = Color(0, 0, 0, 1)
+
+[connection signal="body_entered" from="Camera2D/killzone" to="Camera2D/killzone" method="_on_body_entered"]
+[connection signal="body_entered" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_exited"]
+[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/RetryButton" to="UI/DeathScreen" method="_on_retry_button_pressed"]
+[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/ExitButton" to="UI/DeathScreen" method="_on_exit_button_pressed"]

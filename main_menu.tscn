@@ -1,0 +1,241 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7wyk1g27oxse"]
+
+[ext_resource type="Texture2D" uid="uid://djklrfmrguw5j" path="res://sprites/1bit 16px icons part-2 outlines.png" id="1_ba6vu"]
+[ext_resource type="Script" path="res://option_screen.gd" id="1_pk178"]
+[ext_resource type="Script" path="res://main_screen.gd" id="1_w50ne"]
+[ext_resource type="Texture2D" uid="uid://dgoftbevi4bvd" path="res://sprites/portraits.png" id="2_enc52"]
+[ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="2_o8cm4"]
+[ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="3_8k722"]
+[ext_resource type="Script" path="res://main_menu_ball.gd" id="3_u7pvw"]
+[ext_resource type="Texture2D" uid="uid://cewl0es61utbo" path="res://sprites/background/Clouds/Clouds 1/4.png" id="4_uhtry"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2lt5"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nxot8"]
+radius = 16.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_s1ama"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainScreen" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w50ne")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainScreen"]
+z_index = 3
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 33
+text = "pogo fox"
+
+[node name="PlayButton" type="Button" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "PLAY"
+
+[node name="OptionsButton" type="Button" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "OPTIONS"
+
+[node name="ExitButton" type="Button" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "EXIT"
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen"]
+z_index = -1
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_o8cm4")
+
+[node name="2" type="Sprite2D" parent="MainScreen/TextureRect"]
+position = Vector2(500, 366)
+scale = Vector2(2, 2)
+texture = ExtResource("3_8k722")
+
+[node name="4" type="Sprite2D" parent="MainScreen/TextureRect"]
+position = Vector2(436, 390)
+scale = Vector2(2, 2)
+texture = ExtResource("4_uhtry")
+
+[node name="ColorRect" type="ColorRect" parent="MainScreen/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.639216)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="MainScreen"]
+position = Vector2(332, 350)
+physics_material_override = SubResource("PhysicsMaterial_f2lt5")
+gravity_scale = 0.0
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = ExtResource("3_u7pvw")
+
+[node name="SaverSprite" type="Sprite2D" parent="MainScreen/RigidBody2D"]
+position = Vector2(0, -8)
+scale = Vector2(2, 2)
+texture = ExtResource("2_enc52")
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/RigidBody2D"]
+shape = SubResource("CircleShape2D_nxot8")
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="MainScreen"]
+position = Vector2(316, 390)
+physics_material_override = SubResource("PhysicsMaterial_f2lt5")
+gravity_scale = 0.0
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = ExtResource("3_u7pvw")
+
+[node name="SaverSprite" type="Sprite2D" parent="MainScreen/RigidBody2D2"]
+position = Vector2(0, -8)
+scale = Vector2(2, 2)
+texture = ExtResource("2_enc52")
+hframes = 2
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/RigidBody2D2"]
+shape = SubResource("CircleShape2D_nxot8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MainScreen"]
+position = Vector2(108, 366)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/StaticBody2D"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_s1ama")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="MainScreen"]
+position = Vector2(468, 366)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/StaticBody2D2"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_s1ama")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="MainScreen"]
+position = Vector2(292, 670)
+rotation = 4.71239
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/StaticBody2D3"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_s1ama")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="MainScreen"]
+position = Vector2(292, 30)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainScreen/StaticBody2D4"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_s1ama")
+
+[node name="OptionScreen" type="CenterContainer" parent="."]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pk178")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionScreen"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionScreen/VBoxContainer"]
+layout_mode = 2
+text = "Name:"
+
+[node name="NameLineEdit" type="LineEdit" parent="OptionScreen/VBoxContainer"]
+layout_mode = 2
+text = "You"
+placeholder_text = "Unnamed"
+alignment = 1
+max_length = 15
+
+[node name="SliderBGMVolume" type="HSlider" parent="OptionScreen/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+value = 50.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="OptionScreen/VBoxContainer/SliderBGMVolume"]
+position = Vector2(-24, 20)
+scale = Vector2(2, 2)
+texture = ExtResource("1_ba6vu")
+hframes = 21
+vframes = 21
+frame = 91
+
+[node name="SliderSFXVolume" type="HSlider" parent="OptionScreen/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+value = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="OptionScreen/VBoxContainer/SliderSFXVolume"]
+position = Vector2(-24, 22)
+scale = Vector2(2, 2)
+texture = ExtResource("1_ba6vu")
+hframes = 21
+vframes = 21
+frame = 92
+
+[node name="Timer" type="Timer" parent="OptionScreen/VBoxContainer/SliderSFXVolume"]
+autostart = true
+
+[node name="BackButton" type="Button" parent="OptionScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "BACK
+"
+
+[node name="TextureRect" type="TextureRect" parent="OptionScreen"]
+z_index = -1
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_o8cm4")
+
+[node name="ColorRect" type="ColorRect" parent="OptionScreen/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.639216)
+
+[connection signal="pressed" from="MainScreen/VBoxContainer/PlayButton" to="MainScreen" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/OptionsButton" to="MainScreen" method="_on_options_button_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ExitButton" to="MainScreen" method="_on_exit_button_pressed"]
+[connection signal="text_changed" from="OptionScreen/VBoxContainer/NameLineEdit" to="OptionScreen" method="_on_name_line_edit_text_changed"]
+[connection signal="value_changed" from="OptionScreen/VBoxContainer/SliderBGMVolume" to="OptionScreen" method="_on_slider_bgm_volume_value_changed"]
+[connection signal="drag_ended" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_drag_ended"]
+[connection signal="drag_started" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_drag_started"]
+[connection signal="value_changed" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_value_changed"]
+[connection signal="timeout" from="OptionScreen/VBoxContainer/SliderSFXVolume/Timer" to="OptionScreen" method="_on_timer_timeout"]
+[connection signal="pressed" from="OptionScreen/VBoxContainer/BackButton" to="OptionScreen" method="_on_back_button_pressed"]
