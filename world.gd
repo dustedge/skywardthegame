@@ -8,11 +8,12 @@ var cam_height = 99999
 @onready var platform_spawner = $Camera2D/PlatformSpawner
 @onready var platform_root = $Camera2D/PlatformSpawner/PlatformRoot
 @onready var death_screen = $UI/DeathScreen
+@onready var ui : UI = $UI
 
 var final_score : int = 0
 var target_platforms := 20
 var platforms_count := 0
-var cam_speed = 400.0
+var cam_speed = 1200.0
 var cam_start : Vector2
 var cam_margin = 100.0
 var difficulty_score_step := 10000
@@ -25,6 +26,8 @@ func _ready() -> void:
 	death_screen.hide()
 	player.connect("player_died", _on_player_died)
 	cam_start = cam.position
+	ui.display_stage_text(stage)
+	SoundManager.start_world_playlist()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,6 +40,10 @@ func _process(delta: float) -> void:
 		score_to_next_difficulty += difficulty_score_step
 		Globals.increase_difficulty()
 		stage += 1
+		$BGCanvasLayer.change_parallax_to(stage)
+		ui.display_stage_text(stage)
+		if stage >= 2:
+			player.flashlight_on()
 	update_parralax()
 	pass
 
@@ -63,15 +70,7 @@ func _on_player_died():
 	death_screen.show()
 
 func update_parralax():
-	if stage == 1 and player_score < score_to_next_difficulty:
-		$BGCanvasLayer/Parallax/SkySunsetLayer.modulate.a = map_value(player_score,\
-		difficulty_score_step * stage, score_to_next_difficulty)
-		$DirectionalLight2D.color = Color.from_hsv(0, 0, map_value(player_score,\
-		difficulty_score_step * stage, score_to_next_difficulty, 1.0, 0.0))
-	
-	elif stage == 2 and player_score < score_to_next_difficulty:
-		$BGCanvasLayer/Parallax/SkyNightLayer.modulate.a = map_value(player_score,\
-		difficulty_score_step * stage, score_to_next_difficulty)
+	pass
 
 func map_value(value: float, input_min: float, input_max: float, output_min: float = 0.0, output_max: float = 1.0) -> float:
 	return (value - input_min) / (input_max - input_min) * (output_max - output_min) + output_min

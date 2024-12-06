@@ -8,12 +8,17 @@ const AIRBRAKE = 300.0
 var is_dead : bool = false
 var spin_speed_degrees : float = 225.0
 var sprite_vel_threshold : float = 55.0
+var next_jump_boost := 400
 var play_zone_width = 360
 var play_zone_margin = 15
 
+@onready var anim_player = $AnimationPlayerSprite
 @onready var sprite = $Sprite2D
 
 signal player_died
+
+func _ready() -> void:
+	flashlight_off()
 
 func _process(delta: float) -> void:
 	if !is_dead:
@@ -47,7 +52,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x += direction * (SPEED * delta)
 		if direction > 0:
 			sprite.flip_h = false
-		else: sprite.flip_h = true
+			$PointLightParticles.position.x = -2
+		else: 
+			sprite.flip_h = true
+			$PointLightParticles.position.x = 2
 	else:
 		velocity.x = move_toward(velocity.x, 0, (SPEED * delta))
 		
@@ -79,11 +87,14 @@ func die(delta):
 
 func update_sprite():
 	if velocity.y > sprite_vel_threshold:
-		sprite.frame = 10
+		if not anim_player.current_animation == "fly_down":
+			anim_player.play("fly_down")
 	elif velocity.y < -sprite_vel_threshold:
-		sprite.frame = 8
+		if not anim_player.current_animation == "fly_up":
+			anim_player.play("fly_up")
 	else:
-		sprite.frame = 9	
+		if not anim_player.current_animation == "mid_air":
+			anim_player.play("mid_air")	
 
 func check_bounds():
 	if position.x > play_zone_width + play_zone_margin:
@@ -94,3 +105,17 @@ func check_bounds():
 func player_dead():
 	SoundManager.playSFXAtPosition("res://sounds/fall.wav", global_position)
 	emit_signal("player_died")
+
+func spring_boost(strength):
+	velocity.y = -strength
+	if sprite.flip_h:
+		$AnimationPlayer.play("backflip")
+	else: $AnimationPlayer.play("frontflip")
+
+func flashlight_on():
+	$PointLight.set_deferred("enabled", true) 
+	$PointLightParticles.set_deferred("emitting", true)
+
+func flashlight_off():
+	$PointLight.set_deferred("enabled", false) 
+	$PointLightParticles.set_deferred("emitting", false)

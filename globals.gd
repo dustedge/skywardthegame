@@ -11,11 +11,11 @@ enum Difficulty {
 
 var diff_target_plat : Dictionary = {
 	Difficulty.BREEZE : 20,  #20
-	Difficulty.EASY : 20,    #18
-	Difficulty.NORMAL : 20,  #14
-	Difficulty.HARD : 20,    #12
-	Difficulty.HARDEST: 20,   #8
-	Difficulty.IMPOSSIBLE: 20 #5
+	Difficulty.EASY : 18,    #18
+	Difficulty.NORMAL : 14,  #14
+	Difficulty.HARD : 12,    #12
+	Difficulty.HARDEST: 8,   #8
+	Difficulty.IMPOSSIBLE: 5 #5
 }
 
 var current_difficulty := Difficulty.BREEZE

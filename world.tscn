@@ -1,27 +1,292 @@
-[gd_scene load_steps=20 format=3 uid="uid://y05b75huivnx"]
+[gd_scene load_steps=72 format=3 uid="uid://y05b75huivnx"]
 
 [ext_resource type="PackedScene" uid="uid://cn67okvkd2f32" path="res://player.tscn" id="1_h4dh1"]
 [ext_resource type="Script" path="res://world.gd" id="1_vpan0"]
 [ext_resource type="PackedScene" uid="uid://bucc0kbtqitj2" path="res://platform.tscn" id="2_adxvl"]
 [ext_resource type="Script" path="res://killbox.gd" id="4_v6apa"]
 [ext_resource type="Script" path="res://platform_spawner.gd" id="5_urkof"]
+[ext_resource type="PackedScene" uid="uid://dvydpuu4tleuh" path="res://spring.tscn" id="6_i4fsn"]
 [ext_resource type="Script" path="res://death_screen.gd" id="6_uiebt"]
-[ext_resource type="Texture2D" uid="uid://bw3jt1bvbtota" path="res://sprites/background/Clouds/Clouds 4/3.png" id="7_cdoa6"]
-[ext_resource type="Texture2D" uid="uid://dckjfr6sekl82" path="res://sprites/background/Clouds/Clouds 4/4.png" id="7_fq2pa"]
-[ext_resource type="Texture2D" uid="uid://bmqqwrpgx5m15" path="res://sprites/background/Clouds/Clouds 3/3.png" id="7_qlkll"]
-[ext_resource type="Texture2D" uid="uid://dcmedae6gtm42" path="res://sprites/background/Clouds/Clouds 4/1.png" id="7_wineq"]
-[ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="7_ys0ig"]
-[ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="8_6c13d"]
-[ext_resource type="Texture2D" uid="uid://cf48bddamhdfi" path="res://sprites/background/Clouds/Clouds 3/4.png" id="8_ac234"]
-[ext_resource type="Texture2D" uid="uid://cewl0es61utbo" path="res://sprites/background/Clouds/Clouds 1/4.png" id="9_r1d76"]
+[ext_resource type="Script" path="res://ui.gd" id="7_i2ode"]
+[ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="8_6dlwe"]
+[ext_resource type="Script" path="res://hearts_container.gd" id="8_7jclx"]
 [ext_resource type="Texture2D" uid="uid://b3k1whxeehvhr" path="res://sprites/background/Clouds/Clouds 3/1.png" id="11_8a6o5"]
+[ext_resource type="Script" path="res://bg_canvas_layer.gd" id="11_h1tg2"]
+[ext_resource type="Texture2D" uid="uid://bsxbdnwpa6mcw" path="res://sprites/background/Cave/1.png" id="11_qm5o6"]
+[ext_resource type="Texture2D" uid="uid://dqwdm8ebthf65" path="res://sprites/background/Cave/2.png" id="12_jm63e"]
+[ext_resource type="Texture2D" uid="uid://b5l3gl5oahsqa" path="res://sprites/background/Cave/4.png" id="13_p4rhm"]
+[ext_resource type="Texture2D" uid="uid://b1mw1gs8a64d0" path="res://sprites/background/Cave/5.png" id="14_eylav"]
+[ext_resource type="Texture2D" uid="uid://ctedx33wem3n2" path="res://sprites/background/Cave/7.png" id="15_jta01"]
 [ext_resource type="Script" path="res://height_line_2d.gd" id="16_a84p8"]
+[ext_resource type="Texture2D" uid="uid://b2su2qp8c7ju2" path="res://sprites/background/Cave/9.png" id="16_oa7xj"]
+[ext_resource type="Texture2D" uid="uid://df0yqp7y64nf6" path="res://sprites/background/Mountains/rotated.png" id="17_2e7yo"]
+[ext_resource type="Texture2D" uid="uid://dwyfujv3fktn5" path="res://sprites/background/Forest/Layers/back.png" id="18_fu031"]
+[ext_resource type="Texture2D" uid="uid://8fp211jujrv6" path="res://sprites/background/Forest/Layers/middle.png" id="19_6ik2d"]
+[ext_resource type="Texture2D" uid="uid://c1x5sqwhm05fl" path="res://sprites/background/Babel/background 3/rotated.png" id="20_qjjcb"]
+[ext_resource type="Texture2D" uid="uid://dig461jmdir1c" path="res://sprites/background/Clouds/Clouds 5/1.png" id="21_nhnws"]
+[ext_resource type="Texture2D" uid="uid://hvfw25sxb22a" path="res://sprites/background/Clouds/Clouds 5/3.png" id="22_8f4pg"]
+[ext_resource type="Texture2D" uid="uid://c3uwx3ku1nln4" path="res://sprites/background/Clouds/Clouds 5/4.png" id="23_aur8c"]
+[ext_resource type="Texture2D" uid="uid://baihagd7p55ts" path="res://sprites/background/Clouds/Clouds 5/5.png" id="24_r7v8v"]
+[ext_resource type="Texture2D" uid="uid://b7neucopn5i8s" path="res://sprites/background/Clouds/Clouds 6/1.png" id="25_arwso"]
+[ext_resource type="Texture2D" uid="uid://dua4dajf2ovbj" path="res://sprites/background/Clouds/Clouds 6/2.png" id="26_6e5tk"]
+[ext_resource type="Texture2D" uid="uid://oi2p2xna6q2a" path="res://sprites/background/Clouds/Clouds 6/3.png" id="27_f1sdg"]
+[ext_resource type="Texture2D" uid="uid://64h72xdjwial" path="res://sprites/background/Clouds/Clouds 6/4.png" id="28_arv8w"]
+[ext_resource type="Texture2D" uid="uid://bnww6viqbqbq6" path="res://sprites/background/Clouds/Clouds 6/5.png" id="29_jnkmp"]
+[ext_resource type="Texture2D" uid="uid://ugxgq0djphpv" path="res://sprites/background/Clouds/Clouds 6/6.png" id="30_xak84"]
+[ext_resource type="Texture2D" uid="uid://cedrtlv23cds2" path="res://sprites/background/FullMoon/Moon_Phase_1.png" id="32_1ugic"]
+[ext_resource type="Texture2D" uid="uid://dbfqtkpr8yffg" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 01 - Void.png" id="33_qrjqn"]
+[ext_resource type="Texture2D" uid="uid://b05gb2wn1itpl" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 02 - Stars.png" id="34_lxvo6"]
+[ext_resource type="Texture2D" uid="uid://ca33g7sfdn0yh" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 03 - Stars.png" id="35_noeon"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1j5h1"]
 size = Vector2(899, 370)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7uivt"]
 size = Vector2(360, 640)
+
+[sub_resource type="Animation" id="Animation_uy3d4"]
+resource_name = "show_stage"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.566667, 4.5, 7),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5, 0.5),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bcor0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5aaso"]
+_data = {
+"RESET": SubResource("Animation_bcor0"),
+"show_stage": SubResource("Animation_uy3d4")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrmvi"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcx0g"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(640, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6btoa"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(1280, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ort7v"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(1920, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4vgy"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(2560, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls57q"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(3200, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbhwa"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(3840, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yn17"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(4480, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h77pg"]
+atlas = ExtResource("33_qrjqn")
+region = Rect2(5120, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agnip"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(2560, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxudk"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5e1n"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(640, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_duvet"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(1280, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nydyb"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(1920, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl013"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(3200, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13kje"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(3840, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p1ou"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(4480, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyn3b"]
+atlas = ExtResource("34_lxvo6")
+region = Rect2(5120, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxvh3"]
+atlas = ExtResource("35_noeon")
+region = Rect2(3200, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2gqy"]
+atlas = ExtResource("35_noeon")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0c0u"]
+atlas = ExtResource("35_noeon")
+region = Rect2(640, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyn85"]
+atlas = ExtResource("35_noeon")
+region = Rect2(1280, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huxwc"]
+atlas = ExtResource("35_noeon")
+region = Rect2(1920, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai6ra"]
+atlas = ExtResource("35_noeon")
+region = Rect2(2560, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y78t"]
+atlas = ExtResource("35_noeon")
+region = Rect2(3840, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k66x5"]
+atlas = ExtResource("35_noeon")
+region = Rect2(4480, 0, 640, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88yma"]
+atlas = ExtResource("35_noeon")
+region = Rect2(5120, 0, 640, 360)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qisfc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrmvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcx0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6btoa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ort7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4vgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls57q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbhwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yn17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h77pg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agnip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxudk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5e1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_duvet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nydyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl013")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13kje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8p1ou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyn3b")
+}],
+"loop": true,
+"name": &"default2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxvh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2gqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0c0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyn85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huxwc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai6ra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y78t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k66x5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88yma")
+}],
+"loop": true,
+"name": &"default3",
+"speed": 5.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_kb3kx"]
 offsets = PackedFloat32Array(0, 0.156085, 0.81746, 1)
@@ -37,6 +302,7 @@ scale = Vector2(2, 2)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(180, 320)
 position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 
 [node name="killzone" type="Area2D" parent="Camera2D"]
 position = Vector2(-4, 8)
@@ -52,6 +318,12 @@ shape = SubResource("RectangleShape2D_1j5h1")
 position = Vector2(0, -385)
 script = ExtResource("5_urkof")
 
+[node name="ObjectRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(0, 385)
+
+[node name="Spring" parent="Camera2D/PlatformSpawner/ObjectRoot" instance=ExtResource("6_i4fsn")]
+position = Vector2(63, 329)
+
 [node name="Area2D" type="Area2D" parent="Camera2D/PlatformSpawner"]
 position = Vector2(0, -290)
 collision_layer = 0
@@ -65,7 +337,6 @@ position = Vector2(-176, 24)
 
 [node name="Platform" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
 position = Vector2(176, 624)
-scale = Vector2(4, 1)
 
 [node name="Platform2" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
 position = Vector2(288, 392)
@@ -101,6 +372,28 @@ position = Vector2(88, 208)
 position = Vector2(272, 40)
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("7_i2ode")
+
+[node name="StageLabel" type="Label" parent="UI"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Layer Zero
+~ Whatever Text ~"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/StageLabel"]
+libraries = {
+"": SubResource("AnimationLibrary_5aaso")
+}
 
 [node name="ScoreLabel" type="Label" parent="UI"]
 offset_right = 61.0
@@ -168,110 +461,213 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.364706)
 
+[node name="HeartsContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+script = ExtResource("8_7jclx")
+
+[node name="heart1" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(16, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart2" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(40, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart3" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(64, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
 [node name="BGCanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
+script = ExtResource("11_h1tg2")
 
 [node name="Parallax" type="ParallaxBackground" parent="BGCanvasLayer"]
-visible = false
 
-[node name="CloudsNightLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-z_index = 20
-position = Vector2(296, -13104)
-motion_scale = Vector2(0.4, 0.4)
+[node name="layer0" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+position = Vector2(188, 72)
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(0, 1500)
 
-[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsNightLayer"]
-position = Vector2(8, 0)
-rotation = 1.5708
-scale = Vector2(4, 4)
-texture = ExtResource("7_qlkll")
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("11_qm5o6")
 
-[node name="CloudsNightLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-z_index = 20
-position = Vector2(280, -13096)
-motion_scale = Vector2(0.3, 0.3)
+[node name="2" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("12_jm63e")
 
-[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsNightLayer2"]
-position = Vector2(8, 0)
-rotation = 1.5708
-scale = Vector2(4, 4)
-texture = ExtResource("8_ac234")
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("13_p4rhm")
 
-[node name="CloudsSunsetLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-z_index = 20
-position = Vector2(160, -7176)
-motion_scale = Vector2(0.3, 0.3)
+[node name="5" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("14_eylav")
 
-[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsSunsetLayer2"]
-position = Vector2(8, 0)
-rotation = 1.5708
-scale = Vector2(4, 4)
-texture = ExtResource("7_cdoa6")
+[node name="7" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("15_jta01")
 
-[node name="CloudsSunsetLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-z_index = 20
-position = Vector2(160, -7176)
-motion_scale = Vector2(0.4, 0.4)
+[node name="9" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer0"]
+position = Vector2(4, 514)
+scale = Vector2(1, 1.5)
+texture = ExtResource("16_oa7xj")
 
-[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/CloudsSunsetLayer"]
-position = Vector2(8, 0)
-rotation = 1.5708
-scale = Vector2(4, 4)
-texture = ExtResource("7_fq2pa")
-
-[node name="SkyNightLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+[node name="layer1" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
 modulate = Color(1, 1, 1, 0)
-z_index = 2
-position = Vector2(-1024, -1240)
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(0, 600)
-
-[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkyNightLayer"]
-scale = Vector2(4, 4)
-texture = ExtResource("11_8a6o5")
-centered = false
-
-[node name="SkySunsetLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(-1024, -1544)
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(0, 1000)
-
-[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkySunsetLayer"]
-scale = Vector2(4, 4)
-texture = ExtResource("7_wineq")
-centered = false
-
-[node name="SkyDayLayer" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-position = Vector2(-1024, -1544)
-motion_scale = Vector2(0.1, 0.1)
-motion_mirroring = Vector2(0, 900)
-
-[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/SkyDayLayer"]
-scale = Vector2(4, 4)
-texture = ExtResource("7_ys0ig")
-centered = false
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-position = Vector2(-536, -896)
 motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(0, 1900)
 
-[node name="2" type="Sprite2D" parent="BGCanvasLayer/Parallax/ParallaxLayer2"]
-position = Vector2(1152, 656)
-scale = Vector2(4, 4)
-texture = ExtResource("8_6c13d")
+[node name="StormyMountains1920x1080" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer1"]
+position = Vector2(192, 307)
+texture = ExtResource("17_2e7yo")
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
-position = Vector2(-784, -656)
-motion_scale = Vector2(0.4, 0.4)
+[node name="layer2" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+motion_scale = Vector2(0, 0)
 
-[node name="3" type="Sprite2D" parent="BGCanvasLayer/Parallax/ParallaxLayer3"]
-position = Vector2(1160, 656)
-scale = Vector2(4, 4)
-texture = ExtResource("9_r1d76")
+[node name="Back" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer2"]
+position = Vector2(188, 321)
+scale = Vector2(3, 3)
+texture = ExtResource("18_fu031")
+
+[node name="Middle" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer2"]
+position = Vector2(208, 321)
+scale = Vector2(3, 3)
+texture = ExtResource("19_6ik2d")
+
+[node name="layer3" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(0, 1150)
+
+[node name="Rotated" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer3"]
+position = Vector2(312, 448)
+scale = Vector2(2, 2)
+texture = ExtResource("20_qjjcb")
+
+[node name="layer4" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 1700)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer4"]
+position = Vector2(184, 326)
+scale = Vector2(3, 3)
+texture = ExtResource("21_nhnws")
+
+[node name="3" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer4"]
+position = Vector2(184, 326)
+scale = Vector2(3, 3)
+texture = ExtResource("22_8f4pg")
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer4"]
+position = Vector2(184, 326)
+scale = Vector2(3, 3)
+texture = ExtResource("23_aur8c")
+
+[node name="5" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer4"]
+position = Vector2(184, 326)
+scale = Vector2(3, 3)
+texture = ExtResource("24_r7v8v")
+
+[node name="layer5" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(0, 1150)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("25_arwso")
+
+[node name="2" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("26_6e5tk")
+
+[node name="3" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("27_f1sdg")
+
+[node name="4" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("28_arv8w")
+
+[node name="5" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("29_jnkmp")
+
+[node name="6" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer5"]
+position = Vector2(100, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("30_xak84")
+
+[node name="layer6" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+motion_scale = Vector2(0, 0)
+
+[node name="1" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer6"]
+position = Vector2(188, 464)
+scale = Vector2(3, 3)
+texture = ExtResource("11_8a6o5")
+
+[node name="MoonPhase1" type="Sprite2D" parent="BGCanvasLayer/Parallax/layer6"]
+position = Vector2(180, 96)
+texture = ExtResource("32_1ugic")
+
+[node name="layer7" type="ParallaxLayer" parent="BGCanvasLayer/Parallax"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(208, 16)
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(0, 640)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BGCanvasLayer/Parallax/layer7"]
+position = Vector2(-96, 303)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_qisfc")
+autoplay = "default"
+frame_progress = 0.795395
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="BGCanvasLayer/Parallax/layer7"]
+position = Vector2(-96, 303)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_qisfc")
+animation = &"default2"
+autoplay = "default2"
+frame_progress = 0.501829
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="BGCanvasLayer/Parallax/layer7"]
+position = Vector2(-96, 303)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_qisfc")
+animation = &"default3"
+autoplay = "default3"
+frame_progress = 0.871108
 
 [node name="ColorRect" type="ColorRect" parent="BGCanvasLayer"]
-visible = false
 z_index = -10
 anchors_preset = 15
 anchor_right = 1.0
@@ -279,7 +675,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.294757, 0.531257, 0.757094, 1)
+color = Color(0, 0, 0, 0.309804)
 
 [node name="HeightLine2D" type="Line2D" parent="."]
 z_index = -2
@@ -301,7 +697,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-energy = 0.36
+energy = 0.22
 blend_mode = 2
 shadow_color = Color(0, 0, 0, 1)
 
