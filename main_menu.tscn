@@ -42,7 +42,7 @@ layout_mode = 2
 [node name="TitleLabel" type="Label" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 33
-text = "pogo fox"
+text = "skyward"
 
 [node name="PlayButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2

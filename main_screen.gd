@@ -6,6 +6,7 @@ var speed = 200.0
 var direction = Vector2(0,0)
 
 func _ready() -> void:
+	DiscordManager.set_state(DiscordManager.State.IN_MENU)
 	direction = Vector2(randf_range(-1,1),randf_range(-1,1))
 	body.linear_velocity = direction * speed
 	body.angular_velocity = randf_range(-2,2)

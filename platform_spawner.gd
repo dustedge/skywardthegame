@@ -3,6 +3,7 @@ extends Node2D
 @onready var spawn_area_shape : CollisionShape2D = $Area2D/spawn_area
 var spring_scene = preload("res://spring.tscn")
 var platform_scene = preload("res://platform.tscn")
+var enemy_eye_scene = preload("res://entities/flying_eye.tscn")
 @onready var platform_root = $PlatformRoot
 @onready var object_root = $ObjectRoot
 var max_player_reach_x = 500
@@ -38,6 +39,9 @@ func spawn_platform():
 	
 	if randi() % 100 >= 95:
 		add_spring(new_plat.global_position)
+		
+	elif randi() % 100 >= 98:
+		add_enemy_eye(new_plat.global_position)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -55,4 +59,10 @@ func add_spring(pos):
 	var new_spring = spring_scene.instantiate()
 	object_root.add_child(new_spring)
 	new_spring.global_position = pos + (Vector2.UP * 25)
-	
+
+func add_enemy_eye(where):
+	var new_eye = enemy_eye_scene.instantiate()
+	new_eye.top_level = true
+	object_root.add_child(new_eye)
+	new_eye.global_position = where + (Vector2.UP * 30)
+	print(new_eye.global_position)

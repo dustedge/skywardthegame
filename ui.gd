@@ -8,9 +8,9 @@ func display_stage_text(stage):
 	var stage_str := ""
 	match stage:
 		0:
-			stage_str = "Layer Zero\n~ Underground Shelter ~"
+			stage_str = "Layer Zero\n~ Underground ~"
 		1:
-			stage_str = "Layer One\n~ Climb of Titans ~"
+			stage_str = "Layer One\n~ Mount Titan ~"
 		2:
 			stage_str = "Layer Two\n~ The Redwood Forest ~"
 		3:
@@ -28,3 +28,26 @@ func display_stage_text(stage):
 	stage_label.text = stage_str
 	stage_label_player.play("show_stage")
 	
+
+func get_layer_name(stage):
+	var stage_str := ""
+	match stage:
+		0:
+			stage_str = "Layer Zero\n~ Underground ~"
+		1:
+			stage_str = "Layer One\n~ Mount Titan ~"
+		2:
+			stage_str = "Layer Two\n~ The Redwood Forest ~"
+		3:
+			stage_str = "Layer Three\n~ The Tower of Babel ~"
+		4:
+			stage_str = "Layer Four\n~ The Lower Skies ~"
+		5:
+			stage_str = "Layer Five\n~ Sunset ~"
+		6:
+			stage_str = "Layer Six\n~ Full Moon ~"
+		7:
+			stage_str = "Layer Seven\n~ The Gates of Heaven ~"
+		_:
+			stage_str = "Layer ???\n~ ??? ~"
+	return stage_str

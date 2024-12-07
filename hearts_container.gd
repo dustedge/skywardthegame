@@ -2,7 +2,7 @@ extends HBoxContainer
 
 var bpm = SoundManager.current_bpm
 
-@onready var hearts = [$heart1, $heart2, $heart3]
+@onready var hearts = [$heart1, $heart2, $heart3, $heart4]
 
 var bounce_scale := 3.0
 var default_scale := 2.0
@@ -25,3 +25,15 @@ func _process(delta: float) -> void:
 
 func beat():
 	current_scale = bounce_scale
+
+func update_health(health):
+	for heart : Sprite2D in hearts:
+		if health >= 2:
+			heart.frame = 0
+			health -= 2
+			continue
+		elif health >= 1:
+			heart.frame = 1
+			health -= 1
+		else:
+			heart.frame = 2

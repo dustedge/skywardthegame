@@ -12,15 +12,30 @@ var next_jump_boost := 400
 var play_zone_width = 360
 var play_zone_margin = 15
 
+@export var max_health := 8
+var health := max_health
+
+@onready var light_particles = $Sprite2D/PointLightParticles
+
 @onready var anim_player = $AnimationPlayerSprite
 @onready var sprite = $Sprite2D
+@onready var detector = $EnemyDetector
 
 signal player_died
+signal player_received_damage
 
 func _ready() -> void:
+	_on_ammo_update()
+	
+	$ProjectileEmitter.connect("ammo_update", _on_ammo_update)
 	flashlight_off()
+	
+func _on_ammo_update():
+	get_parent().get_node("UI/KnivesContainer").set_knives_amount($ProjectileEmitter.current_ammo)
 
 func _process(delta: float) -> void:
+	if not $AnimationPlayer.is_playing():
+		$AnimationPlayer.play("RESET")
 	if !is_dead:
 		update_sprite()
 
@@ -45,6 +60,15 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
+	
+	if Input.is_action_just_pressed("key_attack") and not is_dead:
+		
+		if is_instance_valid(detector) and is_instance_valid(detector.closest_target):
+			$ProjectileEmitter.shoot(detector.closest_target.global_position)
+		else:
+			$ProjectileEmitter.shoot(self.global_position + (Vector2.UP * 200))
+		_on_ammo_update()
+	
 	if is_dead:
 		direction = 0
 	
@@ -52,10 +76,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x += direction * (SPEED * delta)
 		if direction > 0:
 			sprite.flip_h = false
-			$PointLightParticles.position.x = -2
+			light_particles.position.x = -2
 		else: 
 			sprite.flip_h = true
-			$PointLightParticles.position.x = 2
+			light_particles.position.x = 2
 	else:
 		velocity.x = move_toward(velocity.x, 0, (SPEED * delta))
 		
@@ -71,6 +95,9 @@ func _physics_process(delta: float) -> void:
 
 func kill():
 	if is_dead: return
+	if health > 0:
+		health = 0
+		emit_signal("player_received_damage", health)
 	SoundManager.playSFXAtPosition("res://sounds/death.wav", global_position)
 	var timer = Timer.new()
 	timer.wait_time = 2.0
@@ -114,8 +141,16 @@ func spring_boost(strength):
 
 func flashlight_on():
 	$PointLight.set_deferred("enabled", true) 
-	$PointLightParticles.set_deferred("emitting", true)
+	light_particles.set_deferred("emitting", true)
 
 func flashlight_off():
 	$PointLight.set_deferred("enabled", false) 
-	$PointLightParticles.set_deferred("emitting", false)
+	light_particles.set_deferred("emitting", false)
+
+func receive_damage(damage):
+	health -= damage
+	emit_signal("player_received_damage", damage)
+	$AnimationPlayer.play("receive_damage")
+	if health <= 0:
+		anim_player.play("fly_down")
+		kill()

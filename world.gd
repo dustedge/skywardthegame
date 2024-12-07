@@ -22,9 +22,17 @@ var player_score : int = 0
 var stage := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	DiscordManager.set_state(DiscordManager.State.IN_GAME)
+	DiscordManager.current_layer = ui.get_layer_name(stage)
+	DiscordManager.current_score = player_score
+	DiscordManager.update_rpc()
+	
 	Globals.current_difficulty = Globals.Difficulty.BREEZE
 	death_screen.hide()
 	player.connect("player_died", _on_player_died)
+	player.connect("player_received_damage", _on_player_received_damage)
+	
 	cam_start = cam.position
 	ui.display_stage_text(stage)
 	SoundManager.start_world_playlist()
@@ -40,9 +48,13 @@ func _process(delta: float) -> void:
 		score_to_next_difficulty += difficulty_score_step
 		Globals.increase_difficulty()
 		stage += 1
+		
+		DiscordManager.current_layer = ui.get_layer_name(stage)
+		DiscordManager.update_rpc()
+		
 		$BGCanvasLayer.change_parallax_to(stage)
 		ui.display_stage_text(stage)
-		if stage >= 2:
+		if stage >= 4:
 			player.flashlight_on()
 	update_parralax()
 	pass
@@ -68,9 +80,17 @@ func _on_player_died():
 	Globals.save_score("Main", Globals.player_name, final_score)
 	death_screen.update_saved_scores()
 	death_screen.show()
-
+	
+func _on_player_received_damage(damage):
+	$UI/HeartsContainer.update_health(player.health)
+	
 func update_parralax():
 	pass
 
 func map_value(value: float, input_min: float, input_max: float, output_min: float = 0.0, output_max: float = 1.0) -> float:
 	return (value - input_min) / (input_max - input_min) * (output_max - output_min) + output_min
+
+
+func _on_rpc_timer_timeout() -> void:
+	DiscordManager.current_score = player_score
+	DiscordManager.update_rpc()

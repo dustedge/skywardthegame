@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://y05b75huivnx"]
+[gd_scene load_steps=75 format=3 uid="uid://y05b75huivnx"]
 
 [ext_resource type="PackedScene" uid="uid://cn67okvkd2f32" path="res://player.tscn" id="1_h4dh1"]
 [ext_resource type="Script" path="res://world.gd" id="1_vpan0"]
@@ -11,8 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="8_6dlwe"]
 [ext_resource type="Script" path="res://hearts_container.gd" id="8_7jclx"]
 [ext_resource type="Texture2D" uid="uid://b3k1whxeehvhr" path="res://sprites/background/Clouds/Clouds 3/1.png" id="11_8a6o5"]
+[ext_resource type="Script" path="res://knives_container.gd" id="11_bwgqi"]
 [ext_resource type="Script" path="res://bg_canvas_layer.gd" id="11_h1tg2"]
 [ext_resource type="Texture2D" uid="uid://bsxbdnwpa6mcw" path="res://sprites/background/Cave/1.png" id="11_qm5o6"]
+[ext_resource type="Texture2D" uid="uid://bq0ahvnma3xas" path="res://sprites/knife.png" id="11_t3b4a"]
 [ext_resource type="Texture2D" uid="uid://dqwdm8ebthf65" path="res://sprites/background/Cave/2.png" id="12_jm63e"]
 [ext_resource type="Texture2D" uid="uid://b5l3gl5oahsqa" path="res://sprites/background/Cave/4.png" id="13_p4rhm"]
 [ext_resource type="Texture2D" uid="uid://b1mw1gs8a64d0" path="res://sprites/background/Cave/5.png" id="14_eylav"]
@@ -37,12 +39,22 @@
 [ext_resource type="Texture2D" uid="uid://dbfqtkpr8yffg" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 01 - Void.png" id="33_qrjqn"]
 [ext_resource type="Texture2D" uid="uid://b05gb2wn1itpl" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 02 - Stars.png" id="34_lxvo6"]
 [ext_resource type="Texture2D" uid="uid://ca33g7sfdn0yh" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 03 - Stars.png" id="35_noeon"]
+[ext_resource type="PackedScene" uid="uid://c5q6dorc35owf" path="res://entities/flying_eye.tscn" id="40_ogojt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j5h1"]
-size = Vector2(899, 370)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7uivt"]
-size = Vector2(360, 640)
+[sub_resource type="Animation" id="Animation_bcor0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_uy3d4"]
 resource_name = "show_stage"
@@ -60,26 +72,17 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_bcor0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5aaso"]
 _data = {
 "RESET": SubResource("Animation_bcor0"),
 "show_stage": SubResource("Animation_uy3d4")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j5h1"]
+size = Vector2(899, 370)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7uivt"]
+size = Vector2(360, 640)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qrmvi"]
 atlas = ExtResource("33_qrjqn")
@@ -295,82 +298,6 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1)
 [node name="World" type="Node2D"]
 script = ExtResource("1_vpan0")
 
-[node name="Player" parent="." instance=ExtResource("1_h4dh1")]
-position = Vector2(192, 320)
-scale = Vector2(2, 2)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(180, 320)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-
-[node name="killzone" type="Area2D" parent="Camera2D"]
-position = Vector2(-4, 8)
-collision_layer = 0
-collision_mask = 3
-script = ExtResource("4_v6apa")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/killzone"]
-position = Vector2(-4, 536)
-shape = SubResource("RectangleShape2D_1j5h1")
-
-[node name="PlatformSpawner" type="Node2D" parent="Camera2D"]
-position = Vector2(0, -385)
-script = ExtResource("5_urkof")
-
-[node name="ObjectRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
-position = Vector2(0, 385)
-
-[node name="Spring" parent="Camera2D/PlatformSpawner/ObjectRoot" instance=ExtResource("6_i4fsn")]
-position = Vector2(63, 329)
-
-[node name="Area2D" type="Area2D" parent="Camera2D/PlatformSpawner"]
-position = Vector2(0, -290)
-collision_layer = 0
-
-[node name="spawn_area" type="CollisionShape2D" parent="Camera2D/PlatformSpawner/Area2D"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_7uivt")
-
-[node name="PlatformRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
-position = Vector2(-176, 24)
-
-[node name="Platform" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(176, 624)
-
-[node name="Platform2" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(288, 392)
-
-[node name="Platform5" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(72, 480)
-
-[node name="Platform12" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(272, 464)
-
-[node name="Platform13" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(136, 272)
-
-[node name="Platform15" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(56, 112)
-
-[node name="Platform6" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(64, 344)
-
-[node name="Platform16" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(280, 120)
-
-[node name="Platform8" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(264, 240)
-
-[node name="Platform10" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(80, 48)
-
-[node name="Platform3" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(88, 208)
-
-[node name="Platform4" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
-position = Vector2(272, 40)
-
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("7_i2ode")
 
@@ -478,18 +405,117 @@ hframes = 8
 vframes = 8
 
 [node name="heart2" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(40, 24)
+position = Vector2(48, 24)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
 vframes = 8
 
 [node name="heart3" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(64, 24)
+position = Vector2(80, 24)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
 vframes = 8
+
+[node name="heart4" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(112, 24)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="KnivesContainer" type="HBoxContainer" parent="UI"]
+layout_direction = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 160.0
+grow_vertical = 0
+script = ExtResource("11_bwgqi")
+
+[node name="knife_template" type="TextureRect" parent="UI/KnivesContainer"]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("11_t3b4a")
+stretch_mode = 5
+
+[node name="Player" parent="." instance=ExtResource("1_h4dh1")]
+position = Vector2(192, 320)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(180, 320)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="killzone" type="Area2D" parent="Camera2D"]
+position = Vector2(-4, 8)
+collision_layer = 0
+collision_mask = 7
+script = ExtResource("4_v6apa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/killzone"]
+position = Vector2(-4, 536)
+shape = SubResource("RectangleShape2D_1j5h1")
+
+[node name="PlatformSpawner" type="Node2D" parent="Camera2D"]
+position = Vector2(0, -385)
+script = ExtResource("5_urkof")
+
+[node name="ObjectRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(0, 385)
+
+[node name="Spring" parent="Camera2D/PlatformSpawner/ObjectRoot" instance=ExtResource("6_i4fsn")]
+position = Vector2(63, 329)
+
+[node name="Area2D" type="Area2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(0, -290)
+collision_layer = 0
+
+[node name="spawn_area" type="CollisionShape2D" parent="Camera2D/PlatformSpawner/Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_7uivt")
+
+[node name="PlatformRoot" type="Node2D" parent="Camera2D/PlatformSpawner"]
+position = Vector2(-176, 24)
+
+[node name="Platform" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(176, 624)
+
+[node name="Platform2" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(288, 392)
+
+[node name="Platform5" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(72, 480)
+
+[node name="Platform12" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(272, 464)
+
+[node name="Platform13" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(136, 272)
+
+[node name="Platform15" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(56, 112)
+
+[node name="Platform6" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(64, 344)
+
+[node name="Platform16" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(280, 120)
+
+[node name="Platform8" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(264, 240)
+
+[node name="Platform10" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(80, 48)
+
+[node name="Platform3" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(88, 208)
+
+[node name="Platform4" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
+position = Vector2(272, 40)
 
 [node name="BGCanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
@@ -668,6 +694,7 @@ autoplay = "default3"
 frame_progress = 0.871108
 
 [node name="ColorRect" type="ColorRect" parent="BGCanvasLayer"]
+visible = false
 z_index = -10
 anchors_preset = 15
 anchor_right = 1.0
@@ -701,8 +728,15 @@ energy = 0.22
 blend_mode = 2
 shadow_color = Color(0, 0, 0, 1)
 
+[node name="RPCTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="FlyingEye" parent="." instance=ExtResource("40_ogojt")]
+position = Vector2(79, 10)
+
+[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/RetryButton" to="UI/DeathScreen" method="_on_retry_button_pressed"]
+[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/ExitButton" to="UI/DeathScreen" method="_on_exit_button_pressed"]
 [connection signal="body_entered" from="Camera2D/killzone" to="Camera2D/killzone" method="_on_body_entered"]
 [connection signal="body_entered" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_exited"]
-[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/RetryButton" to="UI/DeathScreen" method="_on_retry_button_pressed"]
-[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/ExitButton" to="UI/DeathScreen" method="_on_exit_button_pressed"]
+[connection signal="timeout" from="RPCTimer" to="." method="_on_rpc_timer_timeout"]

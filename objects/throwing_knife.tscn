@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://rdk8s0tfkgcl"]
+
+[ext_resource type="Script" path="res://objects/throwing_knife.gd" id="1_bvs10"]
+[ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="1_jfhn5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_secuy"]
+size = Vector2(28, 16)
+
+[node name="ThrowingKnife" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 4
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_bvs10")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 0.785398
+scale = Vector2(2, 2)
+texture = ExtResource("1_jfhn5")
+hframes = 8
+vframes = 8
+frame = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_secuy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
