@@ -3,6 +3,7 @@ class_name EnemyDetector
 
 var closest_target : Node2D = null 
 @onready var crosshair = $TargetCrosshair
+@onready var arrow = $Arrow
 
 var crosshair_speed = 1200.0
 var crosshair_rot_speed = 1.0
@@ -21,8 +22,17 @@ func _process(delta: float) -> void:
 		crosshair.show()
 		crosshair.rotation += (crosshair_rot_speed * delta)
 		if crosshair.global_position.distance_to(closest_target.global_position) > 2.0:
-			crosshair.global_position = crosshair.global_position.move_toward(closest_target.global_position, crosshair_speed * delta)
+			crosshair.global_position = crosshair.global_position.move_toward(\
+			closest_target.global_position, crosshair_speed * delta)
+		
+		if is_instance_valid(arrow):
+			arrow.show()
+			arrow.look_at(closest_target.global_position)
+			arrow.rotation_degrees += 90
+			
+			
 	else: 
+		arrow.hide()
 		crosshair.hide()
 		crosshair.position = Vector2(0, 0)
 		

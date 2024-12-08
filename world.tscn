@@ -437,7 +437,7 @@ script = ExtResource("11_bwgqi")
 
 [node name="knife_template" type="TextureRect" parent="UI/KnivesContainer"]
 visible = false
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("11_t3b4a")
 stretch_mode = 5

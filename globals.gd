@@ -18,6 +18,12 @@ var diff_target_plat : Dictionary = {
 	Difficulty.IMPOSSIBLE: 5 #5
 }
 
+enum EffectType {
+	LOW_GRAVITY,
+	HEAVY,
+	JUMP_BOOST
+}
+
 var current_difficulty := Difficulty.BREEZE
 
 func increase_difficulty():

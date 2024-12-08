@@ -8,9 +8,12 @@ const AIRBRAKE = 300.0
 var is_dead : bool = false
 var spin_speed_degrees : float = 225.0
 var sprite_vel_threshold : float = 55.0
-var next_jump_boost := 400
+var next_jump_boost := 0
 var play_zone_width = 360
 var play_zone_margin = 15
+
+var current_gravity
+var current_effects : Array = []
 
 @export var max_health := 8
 var health := max_health
@@ -40,15 +43,18 @@ func _process(delta: float) -> void:
 		update_sprite()
 
 func _physics_process(delta: float) -> void:
+	current_gravity = get_gravity()
+	update_effects(delta)
+	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += current_gravity * delta
 	# Auto jump.
 	if is_on_floor():
 		var coll = get_last_slide_collision().get_collider()
 		if coll.has_method("player_jump"):
 			coll.player_jump()
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY + (- next_jump_boost)
 		SoundManager.playSFXAtPosition("res://sounds/jump.wav", global_position)
 		
 		if randi() % 100 > 90:
@@ -154,3 +160,48 @@ func receive_damage(damage):
 	if health <= 0:
 		anim_player.play("fly_down")
 		kill()
+
+func apply_effect(type : Globals.EffectType, time : float):
+	self.current_effects.append([type, time])
+
+func update_effects(delta):
+	
+	# clean up
+	current_gravity = get_gravity()
+	
+	# apply effect effects
+	for effect in current_effects:
+		match effect[0]:
+			Globals.EffectType.LOW_GRAVITY:
+				current_gravity = get_gravity() / 2
+				if not $Effects/GravityParticles.emitting:
+					$Effects/GravityParticles.set_deferred("emitting", true)
+				pass
+			Globals.EffectType.HEAVY:
+				current_gravity = get_gravity() * 1.5
+				if not $Effects/BloodParticles.emitting:
+					$Effects/BloodParticles.set_deferred("emitting", true)
+				pass
+			Globals.EffectType.JUMP_BOOST:
+				next_jump_boost = 250.0
+				pass
+				
+	# separate effect removal
+	for effect in current_effects:
+		if effect[1] > 0.0: # tick effect time
+			effect[1] = move_toward(effect[1], 0.0, delta)
+		else:
+			# remove effect
+			if effect[0] == Globals.EffectType.LOW_GRAVITY:
+				if $Effects/GravityParticles.emitting:
+						$Effects/GravityParticles.set_deferred("emitting", false)
+			
+			if effect[0] == Globals.EffectType.HEAVY:
+				if $Effects/BloodParticles.emitting:
+						$Effects/BloodParticles.set_deferred("emitting", false)
+			current_effects.erase(effect)
+			continue
+
+func add_health(amount : int):
+	self.health = min(max_health, health + amount)
+	emit_signal("player_received_damage", -amount)

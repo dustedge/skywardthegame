@@ -16,7 +16,7 @@ var platforms_count := 0
 var cam_speed = 1200.0
 var cam_start : Vector2
 var cam_margin = 100.0
-var difficulty_score_step := 10000
+var difficulty_score_step := 15000
 var score_to_next_difficulty := difficulty_score_step
 var player_score : int = 0
 var stage := 0

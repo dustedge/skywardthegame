@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cn67okvkd2f32"]
+[gd_scene load_steps=44 format=3 uid="uid://cn67okvkd2f32"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_xhkhe"]
 [ext_resource type="Texture2D" uid="uid://cdkvxqfbynyhp" path="res://sprites/tatsusheet.png" id="2_fywfl"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://projectile_emitter.gd" id="5_365op"]
 [ext_resource type="Script" path="res://enemy_detector.gd" id="6_6sqmk"]
 [ext_resource type="Texture2D" uid="uid://bqmsh02bhb6gy" path="res://sprites/crosshair.png" id="6_yc5kk"]
+[ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="8_33ifv"]
 
 [sub_resource type="Gradient" id="Gradient_lmr2n"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -339,6 +340,49 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcanr"]
+atlas = ExtResource("8_33ifv")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7vpk"]
+atlas = ExtResource("8_33ifv")
+region = Rect2(16, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18rhn"]
+atlas = ExtResource("8_33ifv")
+region = Rect2(32, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk562"]
+atlas = ExtResource("8_33ifv")
+region = Rect2(48, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h015r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcanr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7vpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18rhn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fk562")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Curve" id="Curve_og3cm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.123596, 1), 0.0, 0.0, 0, 0, Vector2(0.730337, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_hnn77"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 collision_layer = 2
@@ -382,6 +426,7 @@ libraries = {
 speed_scale = 0.2
 
 [node name="PointLight" type="PointLight2D" parent="."]
+visible = false
 energy = 0.5
 texture = ExtResource("3_i33p5")
 texture_scale = 4.85
@@ -396,12 +441,53 @@ collision_mask = 4
 script = ExtResource("6_6sqmk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
+visible = false
 shape = SubResource("CircleShape2D_kfl7h")
 
 [node name="TargetCrosshair" type="AnimatedSprite2D" parent="EnemyDetector"]
+visible = false
 sprite_frames = SubResource("SpriteFrames_wntuc")
 autoplay = "default"
 frame_progress = 0.705535
+
+[node name="Arrow" type="AnimatedSprite2D" parent="EnemyDetector"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_h015r")
+autoplay = "default"
+frame_progress = 0.715781
+offset = Vector2(0, -25)
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="GravityParticles" type="CPUParticles2D" parent="Effects"]
+emitting = false
+amount = 25
+lifetime = 2.0
+randomness = 0.37
+lifetime_randomness = 0.36
+emission_shape = 3
+emission_rect_extents = Vector2(10, 15)
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_og3cm")
+color = Color(0, 0.784314, 1, 1)
+color_ramp = SubResource("Gradient_hnn77")
+
+[node name="BloodParticles" type="CPUParticles2D" parent="Effects"]
+emitting = false
+amount = 25
+lifetime = 2.0
+randomness = 0.37
+lifetime_randomness = 0.36
+emission_shape = 3
+emission_rect_extents = Vector2(10, 15)
+gravity = Vector2(0, 480)
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_og3cm")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("Gradient_hnn77")
 
 [connection signal="body_entered" from="EnemyDetector" to="EnemyDetector" method="_on_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="EnemyDetector" method="_on_body_exited"]
