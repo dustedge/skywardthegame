@@ -2,9 +2,14 @@ extends CharacterBody2D
 class_name Player
 
 const MAX_SPEED = 300.0
-const SPEED = 300.0
-const JUMP_VELOCITY = -800.0
-const AIRBRAKE = 300.0
+@export var base_move_speed = 300.0
+var move_speed = base_move_speed
+
+@export var base_jump_velocity = -800.0
+var jump_velocity = base_jump_velocity
+
+@export var base_airbrake = 300.0
+var airbrake = base_airbrake
 var is_dead : bool = false
 var spin_speed_degrees : float = 225.0
 var sprite_vel_threshold : float = 55.0
@@ -12,14 +17,18 @@ var next_jump_boost := 0
 var play_zone_width = 360
 var play_zone_margin = 15
 
+var coins = 0
+
 var current_gravity
 var current_effects : Array = []
+var owned_upgrades = {}
 
-@export var max_health := 8
+@export var base_health := 4
+var max_health := base_health
 var health := max_health
 
 @onready var light_particles = $Sprite2D/PointLightParticles
-
+@onready var projectile_emitter : PlayerProjectileEmitter = $ProjectileEmitter
 @onready var anim_player = $AnimationPlayerSprite
 @onready var sprite = $Sprite2D
 @onready var detector = $EnemyDetector
@@ -29,7 +38,7 @@ signal player_received_damage
 
 func _ready() -> void:
 	_on_ammo_update()
-	
+	update_upgrades(Globals.current_player_upgrades)
 	$ProjectileEmitter.connect("ammo_update", _on_ammo_update)
 	flashlight_off()
 	
@@ -50,11 +59,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += current_gravity * delta
 	# Auto jump.
-	if is_on_floor():
+	if is_on_floor() and is_instance_valid(get_last_slide_collision()):
 		var coll = get_last_slide_collision().get_collider()
 		if coll.has_method("player_jump"):
 			coll.player_jump()
-		velocity.y = JUMP_VELOCITY + (- next_jump_boost)
+		
+		if !coll.is_breakable:
+			velocity.y = jump_velocity + (- next_jump_boost) 		
 		SoundManager.playSFXAtPosition("res://sounds/jump.wav", global_position)
 		
 		if randi() % 100 > 90:
@@ -79,7 +90,7 @@ func _physics_process(delta: float) -> void:
 		direction = 0
 	
 	if direction:
-		velocity.x += direction * (SPEED * delta)
+		velocity.x += direction * (move_speed * delta)
 		if direction > 0:
 			sprite.flip_h = false
 			light_particles.position.x = -2
@@ -87,7 +98,7 @@ func _physics_process(delta: float) -> void:
 			sprite.flip_h = true
 			light_particles.position.x = 2
 	else:
-		velocity.x = move_toward(velocity.x, 0, (SPEED * delta))
+		velocity.x = move_toward(velocity.x, 0, (move_speed * delta))
 		
 	if velocity.x > MAX_SPEED: velocity.x = MAX_SPEED
 	elif velocity.x < -MAX_SPEED: velocity.x = -MAX_SPEED
@@ -113,7 +124,7 @@ func kill():
 	timer.connect("timeout", player_dead)
 	self.is_dead = true
 	$CollisionShape2D.set_deferred("disabled", true)
-	velocity.y = JUMP_VELOCITY
+	velocity.y = jump_velocity
 
 func die(delta):
 	rotation_degrees += spin_speed_degrees * delta
@@ -205,3 +216,22 @@ func update_effects(delta):
 func add_health(amount : int):
 	self.health = min(max_health, health + amount)
 	emit_signal("player_received_damage", -amount)
+
+func add_coins(amount : int):
+	self.coins += amount
+	Globals.player_coins = self.coins
+
+func update_upgrades(upgrades : Dictionary):
+	for key in upgrades.keys():
+		match key:
+			Upgrade.UpgradeType.MAX_HEALTH:
+				max_health = base_health + (upgrades[key]["level"] * 2)
+				self.health = max_health
+			Upgrade.UpgradeType.MAX_AMMO:
+				projectile_emitter.max_ammo = projectile_emitter.base_ammo_capacity + (upgrades[key]["level"])
+			Upgrade.UpgradeType.RELOAD_TIME:
+				projectile_emitter.reload_time = projectile_emitter.base_reload_time - (0.2 * upgrades[key]["level"])
+			Upgrade.UpgradeType.AIR_CONTROL:
+				move_speed = base_move_speed + (upgrades[key]["level"] * 20)
+			Upgrade.UpgradeType.JUMP_HEIGHT:
+				jump_velocity = base_jump_velocity + (- upgrades[key]["level"] * 25)

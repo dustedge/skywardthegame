@@ -1,0 +1,137 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq3chs0da12x3"]
+
+[ext_resource type="Script" path="res://upgrade_shop.gd" id="1_igg1f"]
+[ext_resource type="Texture2D" uid="uid://dhai3voe35jcy" path="res://sprites/coin.png" id="2_wd7ce"]
+[ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="3_7jr0l"]
+[ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="4_am130"]
+[ext_resource type="Texture2D" uid="uid://cewl0es61utbo" path="res://sprites/background/Clouds/Clouds 1/4.png" id="5_es6m2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06uff"]
+atlas = ExtResource("2_wd7ce")
+region = Rect2(0, 0, 16, 16)
+
+[node name="UpgradeShop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_igg1f")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="CenterContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="PlayerCoinsContainer" type="HBoxContainer" parent="CenterContainer/BoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/BoxContainer/PlayerCoinsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_06uff")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerCoinsLabel" type="Label" parent="CenterContainer/BoxContainer/PlayerCoinsContainer"]
+layout_mode = 2
+text = "99999999"
+
+[node name="UpgradeButtons" type="GridContainer" parent="CenterContainer/BoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+columns = 3
+
+[node name="UpgradeButton_TEMPLATE" type="Button" parent="CenterContainer/BoxContainer/UpgradeButtons"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+
+[node name="Container" type="GridContainer" parent="CenterContainer/BoxContainer/UpgradeButtons/UpgradeButton_TEMPLATE"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/BoxContainer/UpgradeButtons/UpgradeButton_TEMPLATE/Container"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_06uff")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PriceLabel" type="Label" parent="CenterContainer/BoxContainer/UpgradeButtons/UpgradeButton_TEMPLATE/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "9999"
+horizontal_alignment = 2
+
+[node name="Control" type="Control" parent="CenterContainer/BoxContainer/UpgradeButtons/UpgradeButton_TEMPLATE/Container"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/BoxContainer/UpgradeButtons/UpgradeButton_TEMPLATE/Container"]
+custom_minimum_size = Vector2(16, 28)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 12
+text = "0/3"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="PlayButton" type="Button" parent="CenterContainer/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "PLAY"
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "TO MENU"
+
+[node name="BG" type="TextureRect" parent="CenterContainer"]
+z_index = -1
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_7jr0l")
+
+[node name="2" type="Sprite2D" parent="CenterContainer/BG"]
+position = Vector2(500, 366)
+scale = Vector2(2, 2)
+texture = ExtResource("4_am130")
+
+[node name="4" type="Sprite2D" parent="CenterContainer/BG"]
+position = Vector2(436, 390)
+scale = Vector2(2, 2)
+texture = ExtResource("5_es6m2")
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.639216)
+
+[connection signal="pressed" from="CenterContainer/BoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/BoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

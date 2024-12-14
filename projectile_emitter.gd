@@ -1,11 +1,17 @@
 extends Node2D
+class_name PlayerProjectileEmitter
 
-@export var projectile_scene := preload("res://objects/throwing_knife.tscn")
-@export var reload_time := 1.0
-@export var max_ammo := 4
+var projectile_scene := preload("res://objects/throwing_knife.tscn")
+
+@export var base_reload_time := 2.0
+var reload_time := base_reload_time
+
+@export var base_ammo_capacity := 2
+var max_ammo := base_ammo_capacity
+
 @onready var parent = get_parent()
 var current_reload_time := 0.0
-var current_ammo := 3
+var current_ammo := 1
 
 signal ammo_update
 

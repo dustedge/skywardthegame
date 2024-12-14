@@ -67,6 +67,7 @@ func receive_damage(damage : int):
 
 func die():
 	if is_dead: return
+	SoundManager.playSFXAtPosition("res://sounds/monster/sfx_deathscream_alien{0}.wav".format([randi_range(3, 4)]), self.global_position)
 	$CPUParticles2D.set_deferred("emitting", true)
 	$CollisionShape2D.set_deferred("disabled", true)
 	self.motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED

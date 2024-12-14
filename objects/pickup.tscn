@@ -1,10 +1,75 @@
-[gd_scene load_steps=21 format=3 uid="uid://cvwobx50fryed"]
+[gd_scene load_steps=38 format=3 uid="uid://cvwobx50fryed"]
 
 [ext_resource type="Script" path="res://objects/pickup.gd" id="1_102gf"]
+[ext_resource type="Texture2D" uid="uid://c2lkbldx6i8g3" path="res://sprites/coin_single.png" id="2_4n08k"]
 [ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="2_vk064"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf1bm"]
 size = Vector2(13.3333, 13.3333)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17ee2"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqv1v"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ot8lw"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nghf"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprtd"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi1ud"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_boioc"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t25k"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krwc3"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x73o"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thqep"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0a6o"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n57cu"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmog3"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(208, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wtjc"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7p6x"]
+atlas = ExtResource("2_4n08k")
+region = Rect2(240, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qufus"]
 atlas = ExtResource("2_vk064")
@@ -60,6 +125,59 @@ region = Rect2(48, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pbwg1"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17ee2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqv1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ot8lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nghf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oprtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi1ud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_boioc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2t25k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krwc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x73o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thqep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0a6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmog3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wtjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7p6x")
+}],
+"loop": true,
+"name": &"coin",
+"speed": 7.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qufus")
@@ -172,8 +290,9 @@ shape = SubResource("RectangleShape2D_vf1bm")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_pbwg1")
-animation = &"trap_idle"
+animation = &"coin"
 autoplay = "heart"
+frame_progress = 0.250797
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

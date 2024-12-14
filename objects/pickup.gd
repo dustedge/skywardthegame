@@ -4,11 +4,13 @@ class_name Pickup
 enum Type {
 	LOW_GRAVITY,
 	HEALTH,
-	BEAR_TRAP
+	BEAR_TRAP,
+	COIN
 }
 
 @export var add_health = 0
 @export var effect_time = 0.0
+@export var coin_amount = 1
 
 var sprite_ready : bool = false
 @export var type : Type
@@ -34,6 +36,10 @@ func _process(delta: float) -> void:
 					self.effect_time = 6.0
 					if not animated_sprite.animation == "trap_idle":
 						animated_sprite.play("trap_idle")
+				Type.COIN:
+					self.coin_amount = randi_range(10, 50)
+					if not animated_sprite.animation == "coin":
+						animated_sprite.play("coin")
 		sprite_ready = true
 
 func _on_body_entered(body: Node) -> void:
@@ -51,6 +57,11 @@ func pickup(player : Player):
 		Type.HEALTH:
 			SoundManager.playSFXAtPosition("res://sounds/powerup1.wav", self.global_position)
 			player.add_health(add_health)
+			kill()
+			pass
+		Type.COIN:
+			SoundManager.playSFXAtPosition("res://sounds/coin_pickup.wav", self.global_position)
+			player.add_coins(coin_amount)
 			kill()
 			pass
 		Type.BEAR_TRAP:

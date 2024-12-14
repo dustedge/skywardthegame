@@ -49,6 +49,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "PLAY"
 
+[node name="ShopButton" type="Button" parent="MainScreen/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "SHOP
+"
+
 [node name="OptionsButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
@@ -166,6 +172,21 @@ script = ExtResource("1_pk178")
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionScreen"]
 layout_mode = 2
 
+[node name="Label2" type="Label" parent="OptionScreen/VBoxContainer"]
+layout_mode = 2
+text = "Save Slot:"
+
+[node name="SaveFileChoiceMenuButton" type="MenuButton" parent="OptionScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+flat = false
+item_count = 3
+popup/item_0/text = "file_01"
+popup/item_1/text = "file_02"
+popup/item_1/id = 1
+popup/item_2/text = "file_03"
+popup/item_2/id = 2
+
 [node name="Label" type="Label" parent="OptionScreen/VBoxContainer"]
 layout_mode = 2
 text = "Name:"
@@ -230,9 +251,12 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.639216)
 
 [connection signal="pressed" from="MainScreen/VBoxContainer/PlayButton" to="MainScreen" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainScreen/VBoxContainer/ShopButton" to="MainScreen" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/OptionsButton" to="MainScreen" method="_on_options_button_pressed"]
 [connection signal="pressed" from="MainScreen/VBoxContainer/ExitButton" to="MainScreen" method="_on_exit_button_pressed"]
 [connection signal="text_changed" from="OptionScreen/VBoxContainer/NameLineEdit" to="OptionScreen" method="_on_name_line_edit_text_changed"]
+[connection signal="drag_ended" from="OptionScreen/VBoxContainer/SliderBGMVolume" to="OptionScreen" method="_on_slider_bgm_volume_drag_ended"]
+[connection signal="drag_started" from="OptionScreen/VBoxContainer/SliderBGMVolume" to="OptionScreen" method="_on_slider_bgm_volume_drag_started"]
 [connection signal="value_changed" from="OptionScreen/VBoxContainer/SliderBGMVolume" to="OptionScreen" method="_on_slider_bgm_volume_value_changed"]
 [connection signal="drag_ended" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_drag_ended"]
 [connection signal="drag_started" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_drag_started"]

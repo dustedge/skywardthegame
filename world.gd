@@ -9,6 +9,7 @@ var cam_height = 99999
 @onready var platform_root = $Camera2D/PlatformSpawner/PlatformRoot
 @onready var death_screen = $UI/DeathScreen
 @onready var ui : UI = $UI
+@onready var coin_label : Label = $UI/CoinBoxContainer/CoinLabel
 
 var final_score : int = 0
 var target_platforms := 20
@@ -22,6 +23,9 @@ var player_score : int = 0
 var stage := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	#update hearts
+	_on_player_received_damage(0)
 	
 	DiscordManager.set_state(DiscordManager.State.IN_GAME)
 	DiscordManager.current_layer = ui.get_layer_name(stage)
@@ -40,6 +44,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
+	if !Globals.current_stage == stage:
+		Globals.current_stage = stage
+	
 	score_label.text = "SCORE: " + str(player_score).pad_zeros(9) + " DIFF: " + str(Globals.current_difficulty)
 	score_label.text += "\nPLATFORMS: " + str(platform_root.get_child_count())
 	target_platforms = Globals.diff_target_plat[Globals.current_difficulty]
@@ -56,6 +64,10 @@ func _process(delta: float) -> void:
 		ui.display_stage_text(stage)
 		if stage >= 4:
 			player.flashlight_on()
+			
+	if is_instance_valid(player):
+		if coin_label.text != str(Globals.player_coins).pad_zeros(5):
+			coin_label.text = str(Globals.player_coins).pad_zeros(5)
 	update_parralax()
 	pass
 
@@ -77,12 +89,13 @@ func update_platforms():
 func _on_player_died():
 	final_score = player_score
 	death_screen.set_score(player_score)
-	Globals.save_score("Main", Globals.player_name, final_score)
+	death_screen.send_to_leaderboards(Globals.player_name, final_score)
+	Globals.save_game(final_score)
 	death_screen.update_saved_scores()
 	death_screen.show()
 	
 func _on_player_received_damage(damage):
-	$UI/HeartsContainer.update_health(player.health)
+	$UI/HeartsContainer.update_health(player.health, player.max_health)
 	
 func update_parralax():
 	pass

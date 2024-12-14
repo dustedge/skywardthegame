@@ -10,11 +10,16 @@ config_version=5
 
 [application]
 
-config/name="TatsuJump"
-config/version="0.4.0"
+config/name="Skyward"
+config/version="0.7.0"
 run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/image="res://sprites/splashx3.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://sprites/icon-large.png"
+boot_splash/minimum_display_time=3000
 
 [autoload]
 

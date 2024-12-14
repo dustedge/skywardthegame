@@ -8,6 +8,7 @@ enum State {
 var current_score : int
 var current_layer : String
 var current_state : State
+var discord_running = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_state = State.IN_MENU
@@ -41,6 +42,7 @@ func set_state(state : State):
 	update_rpc()
 	
 func update_rpc():
+	if not DiscordRPC.get_is_discord_working(): return
 	match current_state:
 		State.IN_MENU:
 			DiscordRPC.details = "In Menu"

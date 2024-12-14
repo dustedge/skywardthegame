@@ -1,8 +1,9 @@
-[gd_scene load_steps=75 format=3 uid="uid://y05b75huivnx"]
+[gd_scene load_steps=84 format=3 uid="uid://y05b75huivnx"]
 
 [ext_resource type="PackedScene" uid="uid://cn67okvkd2f32" path="res://player.tscn" id="1_h4dh1"]
 [ext_resource type="Script" path="res://world.gd" id="1_vpan0"]
 [ext_resource type="PackedScene" uid="uid://bucc0kbtqitj2" path="res://platform.tscn" id="2_adxvl"]
+[ext_resource type="Script" path="res://leaderboard.gd" id="4_chctl"]
 [ext_resource type="Script" path="res://killbox.gd" id="4_v6apa"]
 [ext_resource type="Script" path="res://platform_spawner.gd" id="5_urkof"]
 [ext_resource type="PackedScene" uid="uid://dvydpuu4tleuh" path="res://spring.tscn" id="6_i4fsn"]
@@ -10,6 +11,7 @@
 [ext_resource type="Script" path="res://ui.gd" id="7_i2ode"]
 [ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="8_6dlwe"]
 [ext_resource type="Script" path="res://hearts_container.gd" id="8_7jclx"]
+[ext_resource type="Texture2D" uid="uid://dhai3voe35jcy" path="res://sprites/coin.png" id="8_vxxeu"]
 [ext_resource type="Texture2D" uid="uid://b3k1whxeehvhr" path="res://sprites/background/Clouds/Clouds 3/1.png" id="11_8a6o5"]
 [ext_resource type="Script" path="res://knives_container.gd" id="11_bwgqi"]
 [ext_resource type="Script" path="res://bg_canvas_layer.gd" id="11_h1tg2"]
@@ -77,6 +79,56 @@ _data = {
 "RESET": SubResource("Animation_bcor0"),
 "show_stage": SubResource("Animation_uy3d4")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gppy0"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1tn7"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp4jf"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl5s1"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug1c4"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2d1w"]
+atlas = ExtResource("8_vxxeu")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_adu7x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gppy0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1tn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bp4jf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cl5s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ug1c4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2d1w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1j5h1"]
 size = Vector2(899, 370)
@@ -323,8 +375,10 @@ libraries = {
 }
 
 [node name="ScoreLabel" type="Label" parent="UI"]
-offset_right = 61.0
-offset_bottom = 23.0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 65.0
+offset_bottom = 31.0
 text = "Score: 0"
 
 [node name="DeathScreen" type="CenterContainer" parent="UI"]
@@ -362,6 +416,13 @@ text = "9999999"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ShopButton" type="Button" parent="UI/DeathScreen/VBoxContainer"]
+z_index = 20
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "SHOP"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/DeathScreen/VBoxContainer"]
 z_index = 10
 layout_mode = 2
@@ -388,7 +449,16 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.364706)
 
+[node name="HTTPRequest" type="HTTPRequest" parent="UI/DeathScreen"]
+use_threads = true
+timeout = 5.0
+script = ExtResource("4_chctl")
+
+[node name="Timer" type="Timer" parent="UI/DeathScreen/HTTPRequest"]
+wait_time = 10.0
+
 [node name="HeartsContainer" type="HBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(200, 64)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -398,28 +468,70 @@ grow_vertical = 0
 script = ExtResource("8_7jclx")
 
 [node name="heart1" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(16, 24)
+position = Vector2(24, 41)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
 vframes = 8
 
 [node name="heart2" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(48, 24)
+position = Vector2(56, 41)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
 vframes = 8
 
 [node name="heart3" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(80, 24)
+position = Vector2(88, 41)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
 vframes = 8
 
 [node name="heart4" type="Sprite2D" parent="UI/HeartsContainer"]
-position = Vector2(112, 24)
+position = Vector2(120, 41)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart5" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(152, 41)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart6" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(24, 8)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart7" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(56, 8)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart8" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(88, 8)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart9" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(120, 8)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6dlwe")
+hframes = 8
+vframes = 8
+
+[node name="heart10" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(152, 8)
 scale = Vector2(2, 2)
 texture = ExtResource("8_6dlwe")
 hframes = 8
@@ -441,6 +553,28 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("11_t3b4a")
 stretch_mode = 5
+
+[node name="CoinBoxContainer" type="HBoxContainer" parent="UI"]
+layout_direction = 3
+offset_left = 5.0
+offset_right = 72.0
+offset_bottom = 40.0
+
+[node name="CoinLabel" type="Label" parent="UI/CoinBoxContainer"]
+layout_mode = 2
+text = "123456"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="UI/CoinBoxContainer"]
+custom_minimum_size = Vector2(16, 20)
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UI/CoinBoxContainer/Control"]
+position = Vector2(0, 20)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_adu7x")
+autoplay = "default"
+frame_progress = 0.925952
 
 [node name="Player" parent="." instance=ExtResource("1_h4dh1")]
 position = Vector2(192, 320)
@@ -734,8 +868,10 @@ autostart = true
 [node name="FlyingEye" parent="." instance=ExtResource("40_ogojt")]
 position = Vector2(79, 10)
 
+[connection signal="pressed" from="UI/DeathScreen/VBoxContainer/ShopButton" to="UI/DeathScreen" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/RetryButton" to="UI/DeathScreen" method="_on_retry_button_pressed"]
 [connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/ExitButton" to="UI/DeathScreen" method="_on_exit_button_pressed"]
+[connection signal="request_completed" from="UI/DeathScreen/HTTPRequest" to="UI/DeathScreen/HTTPRequest" method="_on_request_completed"]
 [connection signal="body_entered" from="Camera2D/killzone" to="Camera2D/killzone" method="_on_body_entered"]
 [connection signal="body_entered" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Camera2D/PlatformSpawner/Area2D" to="Camera2D/PlatformSpawner" method="_on_area_2d_body_exited"]

@@ -17,11 +17,11 @@ func set_score(score : int):
 	score_label.text = str(score)
 
 func update_saved_scores():
-	var i := 1
-	scores.text = ""
-	for key in Globals.score_data.keys():
-		var scrtext = "{0}. {1}: {2}\n".format([i, key, Globals.score_data[key]])
-		scores.text += scrtext
-		i += 1
-		if i >= 6: break
 	pass
+
+func _on_shop_button_pressed() -> void:
+	SoundManager.playSFX("res://sounds/button_click.wav", false)
+	get_tree().change_scene_to_file("res://upgrade_shop.tscn")
+
+func send_to_leaderboards(player_name, score):
+	$HTTPRequest.send_to_leaderboards(player_name, score)
