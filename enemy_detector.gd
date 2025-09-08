@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 			closest_target = target
 	
 	if is_instance_valid(crosshair) and is_instance_valid(closest_target):
+		
 		crosshair.show()
 		crosshair.rotation += (crosshair_rot_speed * delta)
 		if crosshair.global_position.distance_to(closest_target.global_position) > 2.0:

@@ -1,11 +1,11 @@
 [gd_scene load_steps=33 format=3 uid="uid://c5q6dorc35owf"]
 
-[ext_resource type="Script" path="res://entities/flying_eye.gd" id="1_hqwuu"]
+[ext_resource type="Script" uid="uid://b0fgxpjn5vdh6" path="res://entities/enemy.gd" id="1_hqwuu"]
 [ext_resource type="Texture2D" uid="uid://b51it7g12wskx" path="res://sprites/monster/Flying eye/Attack3.png" id="1_l2is3"]
 [ext_resource type="Texture2D" uid="uid://c43nip7yi03un" path="res://sprites/monster/Flying eye/Death.png" id="2_bvsd4"]
 [ext_resource type="Texture2D" uid="uid://dcevo3ne04y40" path="res://sprites/monster/Flying eye/Flight.png" id="3_rsuhd"]
 [ext_resource type="Texture2D" uid="uid://c6y2jhcdcxmxp" path="res://sprites/monster/Flying eye/Take Hit.png" id="4_3vklr"]
-[ext_resource type="Script" path="res://entities/ai_projectile_emitter.gd" id="6_xmnd1"]
+[ext_resource type="Script" uid="uid://dcxd3t4cr60ao" path="res://entities/ai_projectile_emitter.gd" id="6_xmnd1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sg8jn"]
 atlas = ExtResource("1_l2is3")
@@ -202,9 +202,10 @@ script = ExtResource("1_hqwuu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ea8hn")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
-frame_progress = 0.208086
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a5a3h")

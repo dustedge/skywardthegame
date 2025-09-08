@@ -5,7 +5,6 @@ extends RigidBody2D
 var is_used = false
 
 func _on_body_entered(body: Node) -> void:
-	print("entered")
 	if body is Player and !is_used:
 		body.spring_boost(boost_strength)
 		is_used = true

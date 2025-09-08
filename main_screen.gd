@@ -14,6 +14,7 @@ func _ready() -> void:
 	direction = Vector2(randf_range(-1,1),randf_range(-1,1))
 	body2.linear_velocity = direction * speed
 	body2.angular_velocity = randf_range(-2,2)
+	#test()
 
 func _on_play_button_pressed() -> void:
 	SoundManager.playSFX("res://sounds/button_click.wav", false)
@@ -30,4 +31,17 @@ func _on_exit_button_pressed() -> void:
 func _on_shop_button_pressed() -> void:
 	SoundManager.playSFX("res://sounds/button_click.wav", false)
 	get_tree().change_scene_to_file("res://upgrade_shop.tscn")
+	
+
+
+func test():
+	var start_time := Time.get_ticks_usec()
+	var spread = randi_range(10, 20) * [-1, 1].pick_random()
+	print("pick random usec: {0} usec".format([Time.get_ticks_usec() - start_time]))
+	start_time = Time.get_ticks_usec()
+	var spread2 = randi_range(10, 20)
+	if randi_range(0, 1):
+		spread2 *= -1
+	print("if random usec: {0} usec".format([Time.get_ticks_usec() - start_time]))
+	
 	

@@ -1,8 +1,25 @@
-[gd_scene load_steps=38 format=3 uid="uid://cvwobx50fryed"]
+[gd_scene load_steps=46 format=3 uid="uid://cvwobx50fryed"]
 
-[ext_resource type="Script" path="res://objects/pickup.gd" id="1_102gf"]
+[ext_resource type="Script" uid="uid://b54jvtiyaqaf0" path="res://objects/pickup.gd" id="1_102gf"]
 [ext_resource type="Texture2D" uid="uid://c2lkbldx6i8g3" path="res://sprites/coin_single.png" id="2_4n08k"]
 [ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="2_vk064"]
+[ext_resource type="Texture2D" uid="uid://cc1oug5c68dc" path="res://sprites/effects/particles/textures/64/alpha/effect_1.png" id="4_tspte"]
+
+[sub_resource type="Curve" id="Curve_o26cu"]
+_data = [Vector2(0, 0.692308), 0.0, 0.0, 0, 0, Vector2(0.653333, 1), 0.0, 0.0, 0, 0, Vector2(0.98, 0.549451), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4r6l4"]
+curve = SubResource("Curve_o26cu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5qrwd"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_4r6l4")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf1bm"]
 size = Vector2(13.3333, 13.3333)
@@ -102,6 +119,22 @@ region = Rect2(32, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfp7n"]
 atlas = ExtResource("2_vk064")
 region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xr5as"]
+atlas = ExtResource("2_vk064")
+region = Rect2(112, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3pfr"]
+atlas = ExtResource("2_vk064")
+region = Rect2(96, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fallm"]
+atlas = ExtResource("2_vk064")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8soch"]
+atlas = ExtResource("2_vk064")
+region = Rect2(64, 48, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pj2rw"]
 atlas = ExtResource("2_vk064")
@@ -213,6 +246,23 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 14.0,
+"texture": SubResource("AtlasTexture_xr5as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3pfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fallm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8soch")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 10.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pj2rw")
 }],
@@ -271,8 +321,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sb223"]
 _data = {
-"RESET": SubResource("Animation_dg3i6"),
-"pickup": SubResource("Animation_3lyfj")
+&"RESET": SubResource("Animation_dg3i6"),
+&"pickup": SubResource("Animation_3lyfj")
 }
 
 [node name="Pickup" type="RigidBody2D"]
@@ -283,6 +333,10 @@ contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_102gf")
 
+[node name="HoloEffect" type="GPUParticles2D" parent="."]
+texture = ExtResource("4_tspte")
+process_material = SubResource("ParticleProcessMaterial_5qrwd")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_vf1bm")
@@ -290,13 +344,13 @@ shape = SubResource("RectangleShape2D_vf1bm")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_pbwg1")
-animation = &"coin"
+animation = &"shield"
 autoplay = "heart"
-frame_progress = 0.250797
+frame_progress = 0.724996
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_sb223")
+&"": SubResource("AnimationLibrary_sb223")
 }
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

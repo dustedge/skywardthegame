@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dq3chs0da12x3"]
 
-[ext_resource type="Script" path="res://upgrade_shop.gd" id="1_igg1f"]
+[ext_resource type="Script" uid="uid://wkmcqxj7cjwp" path="res://upgrade_shop.gd" id="1_igg1f"]
 [ext_resource type="Texture2D" uid="uid://dhai3voe35jcy" path="res://sprites/coin.png" id="2_wd7ce"]
 [ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="3_7jr0l"]
 [ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="4_am130"]

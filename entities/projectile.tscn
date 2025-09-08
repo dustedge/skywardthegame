@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dsh174xftpbi"]
 
 [ext_resource type="Texture2D" uid="uid://cgl7ux8tcpu6w" path="res://sprites/effects/bullet.png" id="1_d06ha"]
-[ext_resource type="Script" path="res://entities/projectile.gd" id="1_nxbeq"]
+[ext_resource type="Script" uid="uid://c4mgx60kuvhen" path="res://entities/projectile.gd" id="1_nxbeq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2nn2"]
 size = Vector2(20, 14)
@@ -61,6 +61,6 @@ position = Vector2(0, -1)
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_miu7h")
 autoplay = "default"
-frame_progress = 0.356676
+frame_progress = 0.857157
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

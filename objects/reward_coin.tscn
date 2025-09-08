@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx36y4cbir2ao"]
+
+[ext_resource type="Script" uid="uid://b8412gs4erq4f" path="res://scripts/reward_coin.gd" id="1_ftl7m"]
+[ext_resource type="Texture2D" uid="uid://c2lkbldx6i8g3" path="res://sprites/coin_single.png" id="2_2x6ix"]
+[ext_resource type="Texture2D" uid="uid://cy5jmo3g3nbq7" path="res://sprites/effects/particles/textures/64/alpha/spotlight_2.png" id="2_301l1"]
+
+[node name="RewardCoin" type="Node2D"]
+script = ExtResource("1_ftl7m")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 0, 0.486275)
+texture = ExtResource("2_301l1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2x6ix")
+hframes = 16
+frame = 8

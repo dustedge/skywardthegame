@@ -24,6 +24,7 @@ var stage := 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
+	Globals.world_camera = cam
 	#update hearts
 	_on_player_received_damage(0)
 	
@@ -40,6 +41,9 @@ func _ready() -> void:
 	cam_start = cam.position
 	ui.display_stage_text(stage)
 	SoundManager.start_world_playlist()
+	
+	Globals.current_player = player
+	
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,8 +52,9 @@ func _process(delta: float) -> void:
 	if !Globals.current_stage == stage:
 		Globals.current_stage = stage
 	
-	score_label.text = "SCORE: " + str(player_score).pad_zeros(9) + " DIFF: " + str(Globals.current_difficulty)
-	score_label.text += "\nPLATFORMS: " + str(platform_root.get_child_count())
+	score_label.text = "SCORE: " + str(player_score).pad_zeros(9)
+	# + " DIFF: " + str(Globals.current_difficulty)
+	#score_label.text += "\nPLATFORMS: " + str(platform_root.get_child_count())
 	target_platforms = Globals.diff_target_plat[Globals.current_difficulty]
 	
 	if player_score >= score_to_next_difficulty:
@@ -93,6 +98,8 @@ func _on_player_died():
 	Globals.save_game(final_score)
 	death_screen.update_saved_scores()
 	death_screen.show()
+	stage = 0
+	
 	
 func _on_player_received_damage(damage):
 	$UI/HeartsContainer.update_health(player.health, player.max_health)

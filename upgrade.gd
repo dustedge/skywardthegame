@@ -9,7 +9,9 @@ enum UpgradeType {
 	JUMP_HEIGHT,
 	COIN_CHANCE,
 	FEATHER_CHANCE,
-	HEAL_CHANCE
+	HEAL_CHANCE,
+	SHIELD_CHANCE,
+	MULTISHOT_CHANCE
 }
 
 var type : UpgradeType
@@ -32,47 +34,56 @@ static func get_upgrade(type : UpgradeType) -> Upgrade:
 	
 	match type:
 		UpgradeType.MAX_HEALTH:
-			upgrade.price = 1000
-			upgrade.max_level = 8
+			upgrade.price = 500
+			upgrade.max_level = 3
 			upgrade.icon = preload("res://sprites/icons/icon_1.png")
 
 		UpgradeType.MAX_AMMO:
-			upgrade.price = 1000
+			upgrade.price = 500
 			upgrade.max_level = 3
 			upgrade.icon = preload("res://sprites/icons/icon_3.png")
 
 		UpgradeType.RELOAD_TIME:
-			upgrade.price = 650
-			upgrade.max_level = 4
+			upgrade.price = 350
+			upgrade.max_level = 5
 			upgrade.icon = preload("res://sprites/icons/icon_4.png")
 
 		UpgradeType.AIR_CONTROL:
-			upgrade.price = 800
+			upgrade.price = 150
 			upgrade.max_level = 10
 			upgrade.icon = preload("res://sprites/icons/icon_6.png")
 
 		UpgradeType.JUMP_HEIGHT:
-			upgrade.price = 600
+			upgrade.price = 200
 			upgrade.max_level = 9
 			upgrade.icon = preload("res://sprites/icons/icon_2.png")
 			
 		UpgradeType.COIN_CHANCE:
-			upgrade.price = 450
+			upgrade.price = 190
 			upgrade.max_level = 9
 			upgrade.icon = preload("res://sprites/icons/icon_8.png")
 		
 		UpgradeType.FEATHER_CHANCE:
-			upgrade.price = 300
+			upgrade.price = 170
 			upgrade.max_level = 9
 			upgrade.icon = preload("res://sprites/icons/icon_9.png")
 		
 		UpgradeType.HEAL_CHANCE:
-			upgrade.price = 300
+			upgrade.price = 250
 			upgrade.max_level = 9
 			upgrade.icon = preload("res://sprites/icons/icon_10.png")
+		
+		UpgradeType.SHIELD_CHANCE:
+			upgrade.price = 140
+			upgrade.max_level = 5
+			upgrade.icon = preload("res://sprites/icons/icon_11.png")
+		
+		UpgradeType.MULTISHOT_CHANCE:
+			upgrade.price = 210
+			upgrade.max_level = 5
+			upgrade.icon = preload("res://sprites/icons/icon_12.png")
 
-	# for testing, remove later
-	upgrade.price = int(upgrade.price / 10) 
+	upgrade.price = upgrade.price 
 		
 	upgrade.level_price_increase = upgrade.price
 	return upgrade

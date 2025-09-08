@@ -21,7 +21,9 @@ var diff_target_plat : Dictionary = {
 enum EffectType {
 	LOW_GRAVITY,
 	HEAVY,
-	JUMP_BOOST
+	JUMP_BOOST,
+	MULTISHOT,
+	INVULNERABLE
 }
 
 var current_difficulty := Difficulty.BREEZE
@@ -39,21 +41,28 @@ var savefile = ConfigFile.new()
 var scores : Array[Dictionary] = []
 var current_save := "file_01"
 var settings_file := ConfigFile.new()
+var world_camera : WorldCamera
+var current_player : Player = null
+
 
 func _ready() -> void:
 	
-	var err = savefile.load("user://savedata.sav")
+	var err = settings_file.load("user://config.ini")
+	if err != OK:
+		print("config loading error: ", err)
+		return
+	else:
+		load_config()
+	
+	
+	err = savefile.load("user://savedata.sav")
 	if err != OK:
 		print("save loading error: ", err)
 		return
 		
-	err = settings_file.load("user://config.ini")
-	if err != OK:
-		print("config loading error: ", err)
-		return
+	
 	
 	update_player_data(current_save)
-	load_config()
 
 
 func load_save(slot : String):
@@ -86,6 +95,7 @@ func save_game(score : int = 0, owned_upgrades : Dictionary = current_player_upg
 	update_player_data(save_id)
 
 func update_player_data(from_section):
+	
 	for save in savefile.get_sections():
 		var _player_name = savefile.get_value(save, "player_name")
 		var max_score = savefile.get_value(save, "max_score")
@@ -104,3 +114,28 @@ func update_player_data(from_section):
 			current_player_upgrades = upgrades
 			player_name = _player_name
 			player_coins = coins
+	
+	if not from_section in savefile.get_sections():
+		current_player_upgrades = {}
+		player_name = "Unnamed"
+		player_coins = 0
+
+func shake_camera(strength : float = 1.0):
+	if not world_camera:
+		return
+	world_camera.shake(strength)
+	
+func get_player_node() -> Player:
+	return current_player
+
+func reset():
+	# Reset all values to default
+	current_stage = 0
+	player_name = "Unnamed"
+	player_coins = 0
+	current_player_upgrades = {}
+	player_data = {}
+	scores = []
+	current_save = "file_01"
+	current_player = null
+	print("GLOBALS: Values reset.")

@@ -1,6 +1,7 @@
 extends CenterContainer
 
 @onready var save_file_chooser : MenuButton = $VBoxContainer/SaveFileChoiceMenuButton
+@onready var reset_button : Button = $VBoxContainer/ResetProgressButton
 var save_file_popup : PopupMenu
 var min_db = -50.0
 var max_db = 0.0
@@ -56,6 +57,7 @@ func _on_timer_timeout() -> void:
 
 func _on_back_button_pressed() -> void:
 	SoundManager.playSFX("res://sounds/button_click.wav")
+	reset_button.text = "Reset Progress"
 	self.hide()
 
 
@@ -65,8 +67,8 @@ func _on_name_line_edit_text_changed(new_text: String) -> void:
 		Globals.player_name = "Unnamed"
 		
 func _on_save_slot_changed(new_save_slot : int):
-	save_file_chooser.text = save_file_popup.get_item_text(new_save_slot)
 	Globals.save_game()
+	save_file_chooser.text = save_file_popup.get_item_text(new_save_slot)
 	Globals.load_save(save_file_popup.get_item_text(new_save_slot))
 	$VBoxContainer/NameLineEdit.text = Globals.player_name
 
@@ -78,3 +80,24 @@ func _on_slider_bgm_volume_drag_ended(value_changed: bool) -> void:
 
 func _on_slider_bgm_volume_drag_started() -> void:
 	is_dragging_bgm = true
+
+
+func _on_reset_progress_button_pressed() -> void:
+	# remove all savefiles, reset progress globals
+	# toast completed?
+	var reset_text = "Press again to confirm."
+	
+	if reset_button.text != reset_text:
+		reset_button.text = reset_text
+	else:
+		if DirAccess.remove_absolute("user://savedata.sav") == OK:
+			print("OPTIONS: Save data removal: OK")
+		else:
+			print("OPTIONS: Save data removal: FAILED")
+		
+		print("OPTIONS: Cleaning up.")
+		Globals.reset()
+		
+		print("OPTIONS: Reloading.")
+		get_tree().reload_current_scene()
+	pass

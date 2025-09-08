@@ -1,29 +1,32 @@
-[gd_scene load_steps=84 format=3 uid="uid://y05b75huivnx"]
+[gd_scene load_steps=88 format=3 uid="uid://y05b75huivnx"]
 
 [ext_resource type="PackedScene" uid="uid://cn67okvkd2f32" path="res://player.tscn" id="1_h4dh1"]
-[ext_resource type="Script" path="res://world.gd" id="1_vpan0"]
+[ext_resource type="Script" uid="uid://bpsp4iwtcdeg1" path="res://world.gd" id="1_vpan0"]
 [ext_resource type="PackedScene" uid="uid://bucc0kbtqitj2" path="res://platform.tscn" id="2_adxvl"]
-[ext_resource type="Script" path="res://leaderboard.gd" id="4_chctl"]
-[ext_resource type="Script" path="res://killbox.gd" id="4_v6apa"]
-[ext_resource type="Script" path="res://platform_spawner.gd" id="5_urkof"]
+[ext_resource type="Script" uid="uid://cxgr2fd8515h8" path="res://leaderboard.gd" id="4_chctl"]
+[ext_resource type="Script" uid="uid://c6abrgkjo3yyv" path="res://killbox.gd" id="4_v6apa"]
+[ext_resource type="Script" uid="uid://c0akoeduk20xn" path="res://platform_spawner.gd" id="5_urkof"]
 [ext_resource type="PackedScene" uid="uid://dvydpuu4tleuh" path="res://spring.tscn" id="6_i4fsn"]
-[ext_resource type="Script" path="res://death_screen.gd" id="6_uiebt"]
-[ext_resource type="Script" path="res://ui.gd" id="7_i2ode"]
+[ext_resource type="Script" uid="uid://bioyw16wgsmjy" path="res://death_screen.gd" id="6_uiebt"]
+[ext_resource type="Script" uid="uid://bxkyis4mh05gk" path="res://ui.gd" id="7_i2ode"]
 [ext_resource type="Texture2D" uid="uid://di5lxl4ifstx" path="res://sprites/icons.png" id="8_6dlwe"]
-[ext_resource type="Script" path="res://hearts_container.gd" id="8_7jclx"]
+[ext_resource type="Script" uid="uid://cjvlfw7xxtnwt" path="res://hearts_container.gd" id="8_7jclx"]
 [ext_resource type="Texture2D" uid="uid://dhai3voe35jcy" path="res://sprites/coin.png" id="8_vxxeu"]
 [ext_resource type="Texture2D" uid="uid://b3k1whxeehvhr" path="res://sprites/background/Clouds/Clouds 3/1.png" id="11_8a6o5"]
-[ext_resource type="Script" path="res://knives_container.gd" id="11_bwgqi"]
-[ext_resource type="Script" path="res://bg_canvas_layer.gd" id="11_h1tg2"]
+[ext_resource type="Script" uid="uid://btpuv57v2jegp" path="res://knives_container.gd" id="11_bwgqi"]
+[ext_resource type="Script" uid="uid://q46v3qa0dkd8" path="res://bg_canvas_layer.gd" id="11_h1tg2"]
 [ext_resource type="Texture2D" uid="uid://bsxbdnwpa6mcw" path="res://sprites/background/Cave/1.png" id="11_qm5o6"]
 [ext_resource type="Texture2D" uid="uid://bq0ahvnma3xas" path="res://sprites/knife.png" id="11_t3b4a"]
+[ext_resource type="Script" uid="uid://corrc6vf0bnnf" path="res://world_camera.gd" id="11_wfnsb"]
 [ext_resource type="Texture2D" uid="uid://dqwdm8ebthf65" path="res://sprites/background/Cave/2.png" id="12_jm63e"]
 [ext_resource type="Texture2D" uid="uid://b5l3gl5oahsqa" path="res://sprites/background/Cave/4.png" id="13_p4rhm"]
 [ext_resource type="Texture2D" uid="uid://b1mw1gs8a64d0" path="res://sprites/background/Cave/5.png" id="14_eylav"]
+[ext_resource type="Script" uid="uid://cernmf884anuv" path="res://entities/enemy_spawner.gd" id="15_fs8vw"]
 [ext_resource type="Texture2D" uid="uid://ctedx33wem3n2" path="res://sprites/background/Cave/7.png" id="15_jta01"]
-[ext_resource type="Script" path="res://height_line_2d.gd" id="16_a84p8"]
+[ext_resource type="Script" uid="uid://bw15n3qwxf88k" path="res://height_line_2d.gd" id="16_a84p8"]
 [ext_resource type="Texture2D" uid="uid://b2su2qp8c7ju2" path="res://sprites/background/Cave/9.png" id="16_oa7xj"]
 [ext_resource type="Texture2D" uid="uid://df0yqp7y64nf6" path="res://sprites/background/Mountains/rotated.png" id="17_2e7yo"]
+[ext_resource type="Script" uid="uid://dmlfwxg3p7jtv" path="res://scripts/reward_spawner.gd" id="17_mi163"]
 [ext_resource type="Texture2D" uid="uid://dwyfujv3fktn5" path="res://sprites/background/Forest/Layers/back.png" id="18_fu031"]
 [ext_resource type="Texture2D" uid="uid://8fp211jujrv6" path="res://sprites/background/Forest/Layers/middle.png" id="19_6ik2d"]
 [ext_resource type="Texture2D" uid="uid://c1x5sqwhm05fl" path="res://sprites/background/Babel/background 3/rotated.png" id="20_qjjcb"]
@@ -41,7 +44,6 @@
 [ext_resource type="Texture2D" uid="uid://dbfqtkpr8yffg" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 01 - Void.png" id="33_qrjqn"]
 [ext_resource type="Texture2D" uid="uid://b05gb2wn1itpl" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 02 - Stars.png" id="34_lxvo6"]
 [ext_resource type="Texture2D" uid="uid://ca33g7sfdn0yh" path="res://sprites/background/TheGates/Foozle_2DS0015_Void_EnvironmentPack/Backgrounds/PNGs/Condesed/Starry background  - Layer 03 - Stars.png" id="35_noeon"]
-[ext_resource type="PackedScene" uid="uid://c5q6dorc35owf" path="res://entities/flying_eye.tscn" id="40_ogojt"]
 
 [sub_resource type="Animation" id="Animation_bcor0"]
 length = 0.001
@@ -76,8 +78,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5aaso"]
 _data = {
-"RESET": SubResource("Animation_bcor0"),
-"show_stage": SubResource("Animation_uy3d4")
+&"RESET": SubResource("Animation_bcor0"),
+&"show_stage": SubResource("Animation_uy3d4")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gppy0"]
@@ -135,6 +137,12 @@ size = Vector2(899, 370)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7uivt"]
 size = Vector2(360, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5r8t"]
+size = Vector2(328, 592)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r034"]
+size = Vector2(360, 138)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qrmvi"]
 atlas = ExtResource("33_qrjqn")
@@ -371,7 +379,7 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/StageLabel"]
 libraries = {
-"": SubResource("AnimationLibrary_5aaso")
+&"": SubResource("AnimationLibrary_5aaso")
 }
 
 [node name="ScoreLabel" type="Label" parent="UI"]
@@ -583,6 +591,7 @@ position = Vector2(192, 320)
 position = Vector2(180, 320)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+script = ExtResource("11_wfnsb")
 
 [node name="killzone" type="Area2D" parent="Camera2D"]
 position = Vector2(-4, 8)
@@ -650,6 +659,29 @@ position = Vector2(88, 208)
 
 [node name="Platform4" parent="Camera2D/PlatformSpawner/PlatformRoot" instance=ExtResource("2_adxvl")]
 position = Vector2(272, 40)
+
+[node name="EnemySpawner" type="Node2D" parent="Camera2D"]
+script = ExtResource("15_fs8vw")
+
+[node name="AllowedArea" type="Area2D" parent="Camera2D/EnemySpawner"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="AllowedAreaShape" type="CollisionShape2D" parent="Camera2D/EnemySpawner/AllowedArea"]
+shape = SubResource("RectangleShape2D_l5r8t")
+
+[node name="EnemyRoot" type="Node2D" parent="Camera2D/EnemySpawner"]
+position = Vector2(-164, -296)
+
+[node name="SpawnArea" type="Area2D" parent="Camera2D/EnemySpawner"]
+position = Vector2(0, -384)
+
+[node name="SpawnAreaShape" type="CollisionShape2D" parent="Camera2D/EnemySpawner/SpawnArea"]
+position = Vector2(0, -59)
+shape = SubResource("RectangleShape2D_0r034")
+
+[node name="RewardSpawner" type="Node" parent="Camera2D/EnemySpawner"]
+script = ExtResource("17_mi163")
 
 [node name="BGCanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
@@ -865,8 +897,10 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="RPCTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="FlyingEye" parent="." instance=ExtResource("40_ogojt")]
-position = Vector2(79, 10)
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+timeout = 5.0
+script = ExtResource("4_chctl")
 
 [connection signal="pressed" from="UI/DeathScreen/VBoxContainer/ShopButton" to="UI/DeathScreen" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/DeathScreen/VBoxContainer/HBoxContainer/RetryButton" to="UI/DeathScreen" method="_on_retry_button_pressed"]

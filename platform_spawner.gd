@@ -5,9 +5,11 @@ var spring_scene = preload("res://spring.tscn")
 var platform_scene = preload("res://platform.tscn")
 var enemy_eye_scene = preload("res://entities/flying_eye.tscn")
 var pickup_scene = preload("res://objects/pickup.tscn")
+var multishot_scene = preload("res://objects/multi_shot_pickup.tscn")
 
 @onready var platform_root = $PlatformRoot
 @onready var object_root = $ObjectRoot
+@onready var enemy_spawner : EnemySpawner = get_parent().get_node("EnemySpawner")
 var max_player_reach_x = 500
 var vertical_spacing = 0.0
 var last_spawn_y = 640
@@ -18,9 +20,11 @@ var spawn_chances = {
 	"health" : 1,
 	"feather" : 1,
 	"bear_trap" : 1,
-	"enemy_eye" : 2,
+	"multishot" : 0.5,
 	"spring" : 5,
-	"moving_platform" : 5
+	"moving_platform" : 5,
+	"invulnerability" : 0.5,
+	"skeleton" : 0.1,
 }
 
 func _ready() -> void:
@@ -29,16 +33,24 @@ func _ready() -> void:
 	var upgrades = Globals.current_player_upgrades
 	
 	if upgrades.has(Upgrade.UpgradeType.COIN_CHANCE):
-		spawn_chances["coin"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"]
+		spawn_chances["coin"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"] / 10.0
 		print("coin chance: ", spawn_chances["coin"])
 		
 	if upgrades.has(Upgrade.UpgradeType.FEATHER_CHANCE):
-		spawn_chances["feather"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"]
+		spawn_chances["feather"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"] / 10.0
 		print("feather chance: ", spawn_chances["feather"])
 		
 	if upgrades.has(Upgrade.UpgradeType.HEAL_CHANCE):
-		spawn_chances["health"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"]
+		spawn_chances["health"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"] / 10.0
 		print("health chance: ", spawn_chances["health"])
+		
+	if upgrades.has(Upgrade.UpgradeType.SHIELD_CHANCE):
+		spawn_chances["invulnerability"] += upgrades[Upgrade.UpgradeType.SHIELD_CHANCE]["level"] / 10.0
+		print("invulnerability chance: ", spawn_chances["invulnerability"])
+	
+	if upgrades.has(Upgrade.UpgradeType.MULTISHOT_CHANCE):
+		spawn_chances["multishot"] += upgrades[Upgrade.UpgradeType.MULTISHOT_CHANCE]["level"] / 10.0
+		print("multishot chance: ", spawn_chances["multishot"])
 	
 var platforms : Array[Platform] = []	
 
@@ -69,27 +81,34 @@ func spawn_platform(is_breakable := false):
 	if !is_breakable:
 		last_spawn_y = new_plat.global_position.y 
 	
-	if randi() % 100 <= spawn_chances["spring"]:
+	if randf_range(0, 100) <= spawn_chances["spring"]:
 		add_spring(new_plat.global_position)
 		
-	elif randi() % 100 <= spawn_chances["enemy_eye"]:
-		add_enemy_eye(new_plat.global_position)
-		
-	elif randi() % 100 <= spawn_chances["health"]:
+	elif randf_range(0, 100) <= spawn_chances["health"]:
 		add_pickup(new_plat.global_position, Pickup.Type.HEALTH)
 		
-	elif randi() % 100 <= spawn_chances["feather"]:
+	elif randf_range(0, 100) <= spawn_chances["feather"]:
 		add_pickup(new_plat.global_position, Pickup.Type.LOW_GRAVITY)
 		
-	elif randi() % 100 <= spawn_chances["bear_trap"]:
+	elif randf_range(0, 100) <= spawn_chances["bear_trap"]:
 		add_pickup(new_plat.global_position, Pickup.Type.BEAR_TRAP)
 		
-	elif randi() % 100 <= spawn_chances["coin"]:
+	elif randf_range(0, 100) <= spawn_chances["coin"]:
 		add_pickup(new_plat.global_position, Pickup.Type.COIN)
 		
-	elif randi() % 100 <= spawn_chances["moving_platform"]:
+	elif randf_range(0, 100) <= spawn_chances["moving_platform"]:
 		new_plat.anchor_point = new_plat.global_position
 		new_plat.is_moving = true
+		
+	elif randf_range(0, 100) <= spawn_chances["multishot"]:
+		add_pickup(new_plat.global_position, Pickup.Type.MULTISHOT)
+		
+	elif randf_range(0, 100) <= spawn_chances["skeleton"] + Globals.current_stage:
+		if enemy_spawner:
+			enemy_spawner.spawn_enemy(enemy_spawner.enemy_skeleton_scene, new_plat.global_position + Vector2(0, -100.0))
+	
+	elif randf_range(0, 100) <= spawn_chances["invulnerability"]:
+		add_pickup(new_plat.global_position, Pickup.Type.INVULNERABLE)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Platform and not body in platforms and !body.is_breakable:
@@ -106,15 +125,14 @@ func add_spring(pos):
 	var new_spring = spring_scene.instantiate()
 	object_root.add_child(new_spring)
 	new_spring.global_position = pos + (Vector2.UP * 25)
-
-func add_enemy_eye(where):
-	var new_eye = enemy_eye_scene.instantiate()
-	new_eye.top_level = true
-	object_root.add_child(new_eye)
-	new_eye.global_position = where + (Vector2.UP * 30)
 	
 func add_pickup(where, type : Pickup.Type):
-	var new_pickup : Pickup = pickup_scene.instantiate()
+	var new_pickup : Pickup
+	
+	if type == Pickup.Type.MULTISHOT:
+		new_pickup = multishot_scene.instantiate()
+	else:
+		new_pickup = pickup_scene.instantiate()
 	
 	new_pickup.type = type
 	new_pickup.update()

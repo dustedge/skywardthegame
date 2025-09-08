@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://c7wyk1g27oxse"]
 
 [ext_resource type="Texture2D" uid="uid://djklrfmrguw5j" path="res://sprites/1bit 16px icons part-2 outlines.png" id="1_ba6vu"]
-[ext_resource type="Script" path="res://option_screen.gd" id="1_pk178"]
-[ext_resource type="Script" path="res://main_screen.gd" id="1_w50ne"]
+[ext_resource type="Script" uid="uid://bkumrmom2i7xy" path="res://option_screen.gd" id="1_pk178"]
+[ext_resource type="Script" uid="uid://2kcqro1m7xhx" path="res://main_screen.gd" id="1_w50ne"]
 [ext_resource type="Texture2D" uid="uid://dgoftbevi4bvd" path="res://sprites/portraits.png" id="2_enc52"]
 [ext_resource type="Texture2D" uid="uid://drl575veokno1" path="res://sprites/background/Clouds/Clouds 1/1.png" id="2_o8cm4"]
 [ext_resource type="Texture2D" uid="uid://djpmsogqp52d2" path="res://sprites/background/Clouds/Clouds 1/2.png" id="3_8k722"]
-[ext_resource type="Script" path="res://main_menu_ball.gd" id="3_u7pvw"]
+[ext_resource type="Script" uid="uid://cg4c2kpdoo5mb" path="res://main_menu_ball.gd" id="3_u7pvw"]
 [ext_resource type="Texture2D" uid="uid://cewl0es61utbo" path="res://sprites/background/Clouds/Clouds 1/4.png" id="4_uhtry"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f2lt5"]
@@ -41,28 +41,24 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 33
+theme_type_variation = &"TitleLabel"
 text = "skyward"
 
 [node name="PlayButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "PLAY"
 
 [node name="ShopButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "SHOP
 "
 
 [node name="OptionsButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "OPTIONS"
 
 [node name="ExitButton" type="Button" parent="MainScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "EXIT"
 
 [node name="TextureRect" type="TextureRect" parent="MainScreen"]
@@ -182,6 +178,7 @@ layout_mode = 2
 flat = false
 item_count = 3
 popup/item_0/text = "file_01"
+popup/item_0/id = 0
 popup/item_1/text = "file_02"
 popup/item_1/id = 1
 popup/item_2/text = "file_03"
@@ -227,9 +224,12 @@ frame = 92
 [node name="Timer" type="Timer" parent="OptionScreen/VBoxContainer/SliderSFXVolume"]
 autostart = true
 
+[node name="ResetProgressButton" type="Button" parent="OptionScreen/VBoxContainer"]
+layout_mode = 2
+text = "Reset Progress"
+
 [node name="BackButton" type="Button" parent="OptionScreen/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "BACK
 "
 
@@ -262,4 +262,5 @@ color = Color(0, 0, 0, 0.639216)
 [connection signal="drag_started" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_drag_started"]
 [connection signal="value_changed" from="OptionScreen/VBoxContainer/SliderSFXVolume" to="OptionScreen" method="_on_slider_sfx_volume_value_changed"]
 [connection signal="timeout" from="OptionScreen/VBoxContainer/SliderSFXVolume/Timer" to="OptionScreen" method="_on_timer_timeout"]
+[connection signal="pressed" from="OptionScreen/VBoxContainer/ResetProgressButton" to="OptionScreen" method="_on_reset_progress_button_pressed"]
 [connection signal="pressed" from="OptionScreen/VBoxContainer/BackButton" to="OptionScreen" method="_on_back_button_pressed"]

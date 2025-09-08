@@ -17,7 +17,7 @@ var next_jump_boost := 0
 var play_zone_width = 360
 var play_zone_margin = 15
 
-var coins = 0
+var coins = Globals.player_coins
 
 var current_gravity
 var current_effects : Array = []
@@ -26,6 +26,8 @@ var owned_upgrades = {}
 @export var base_health := 4
 var max_health := base_health
 var health := max_health
+var multishot := false
+var is_invulnerable := false
 
 @onready var light_particles = $Sprite2D/PointLightParticles
 @onready var projectile_emitter : PlayerProjectileEmitter = $ProjectileEmitter
@@ -65,7 +67,8 @@ func _physics_process(delta: float) -> void:
 			coll.player_jump()
 		
 		if !coll.is_breakable:
-			velocity.y = jump_velocity + (- next_jump_boost) 		
+			velocity.y = jump_velocity + (- next_jump_boost)
+			Globals.shake_camera(3.0) 		
 		SoundManager.playSFXAtPosition("res://sounds/jump.wav", global_position)
 		
 		if randi() % 100 > 90:
@@ -76,14 +79,18 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("key_left", "key_right")
 	
 	if Input.is_action_just_pressed("key_attack") and not is_dead:
 		
 		if is_instance_valid(detector) and is_instance_valid(detector.closest_target):
-			$ProjectileEmitter.shoot(detector.closest_target.global_position)
+			if detector.closest_target is Enemy and !detector.closest_target.is_static:
+				$ProjectileEmitter.shoot(detector.closest_target.global_position, multishot, true)
+			else:
+				$ProjectileEmitter.shoot(detector.closest_target.global_position, multishot)			
+			
 		else:
-			$ProjectileEmitter.shoot(self.global_position + (Vector2.UP * 200))
+			$ProjectileEmitter.shoot(self.global_position + (Vector2.UP * 200), multishot)
 		_on_ammo_update()
 	
 	if is_dead:
@@ -117,6 +124,7 @@ func kill():
 		emit_signal("player_received_damage", health)
 	SoundManager.playSFXAtPosition("res://sounds/death.wav", global_position)
 	var timer = Timer.new()
+	Globals.shake_camera(70.0)
 	timer.wait_time = 2.0
 	timer.one_shot = true
 	self.add_child(timer)
@@ -165,9 +173,17 @@ func flashlight_off():
 	light_particles.set_deferred("emitting", false)
 
 func receive_damage(damage):
+	
+	if is_invulnerable:
+		SoundManager.playSFXAtPosition("res://sounds/shield.wav", self.global_position)
+		$Effects/Invulnerable/AnimationPlayer.play("hit")
+		return
+	
 	health -= damage
 	emit_signal("player_received_damage", damage)
+	SoundManager.playSFXAtPosition("res://sounds/weapons/damage{0}.wav".format([randi_range(1,4)]), self.global_position)
 	$AnimationPlayer.play("receive_damage")
+	Globals.shake_camera(50.0)
 	if health <= 0:
 		anim_player.play("fly_down")
 		kill()
@@ -183,6 +199,7 @@ func update_effects(delta):
 	# apply effect effects
 	for effect in current_effects:
 		match effect[0]:
+			
 			Globals.EffectType.LOW_GRAVITY:
 				current_gravity = get_gravity() / 2
 				if not $Effects/GravityParticles.emitting:
@@ -196,6 +213,14 @@ func update_effects(delta):
 			Globals.EffectType.JUMP_BOOST:
 				next_jump_boost = 250.0
 				pass
+			Globals.EffectType.MULTISHOT:
+				multishot = true
+				if not $Effects/Powerful.visible:
+					$Effects/Powerful.show_effect()
+				pass
+			Globals.EffectType.INVULNERABLE:
+				is_invulnerable = true
+				$Effects/Invulnerable/GPUParticles2D.set_deferred("emitting", true)
 				
 	# separate effect removal
 	for effect in current_effects:
@@ -207,11 +232,28 @@ func update_effects(delta):
 				if $Effects/GravityParticles.emitting:
 						$Effects/GravityParticles.set_deferred("emitting", false)
 			
-			if effect[0] == Globals.EffectType.HEAVY:
+			elif effect[0] == Globals.EffectType.HEAVY:
 				if $Effects/BloodParticles.emitting:
 						$Effects/BloodParticles.set_deferred("emitting", false)
+			
+			elif effect[0] == Globals.EffectType.INVULNERABLE:
+				is_invulnerable = false
+				if $Effects/Invulnerable/GPUParticles2D.emitting:
+						$Effects/Invulnerable/GPUParticles2D.set_deferred("emitting", false)
+			
+			
 			current_effects.erase(effect)
 			continue
+			
+	var has_multishot := false
+	for effect in current_effects:
+		if effect[0] == Globals.EffectType.MULTISHOT:
+			has_multishot = true
+	
+	if !has_multishot:
+		multishot = false
+		if $Effects/Powerful.visible:
+			$Effects/Powerful.hide_effect()
 
 func add_health(amount : int):
 	self.health = min(max_health, health + amount)

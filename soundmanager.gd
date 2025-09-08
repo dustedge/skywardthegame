@@ -76,7 +76,7 @@ func _ready() -> void:
 	
 	
 
-func playSFXAtPosition(path : String, where : Vector2):
+func playSFXAtPosition(path : String, where : Vector2, volume_offset_db = 0.0):
 	load_sound(path)
 	
 	var stream : AudioStream = loaded_sounds[path]
@@ -85,6 +85,7 @@ func playSFXAtPosition(path : String, where : Vector2):
 			player.stream = stream
 			player.global_position = where
 			player.pitch_scale = 1.0 + randf_range(-sound_pitch_variation, sound_pitch_variation)
+			player.volume_db = volume_offset_db
 			player.play()
 			return
 
