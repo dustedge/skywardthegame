@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Skyward"
-config/version="0.8.2"
+config/version="0.8.2b"
 run/main_scene="res://main_menu.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
 boot_splash/bg_color=Color(0, 0, 0, 1)

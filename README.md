@@ -23,3 +23,4 @@ Made as a full-stack learning excercise in Godot 4
 - [ ] Bosses
 - [ ] Story
 - [ ] Android & Linux versions
+- [ ] Code cleanup\comments

@@ -37,11 +37,11 @@ func _ready() -> void:
 		print("coin chance: ", spawn_chances["coin"])
 		
 	if upgrades.has(Upgrade.UpgradeType.FEATHER_CHANCE):
-		spawn_chances["feather"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"] / 10.0
+		spawn_chances["feather"] += upgrades[Upgrade.UpgradeType.FEATHER_CHANCE]["level"] / 10.0
 		print("feather chance: ", spawn_chances["feather"])
 		
 	if upgrades.has(Upgrade.UpgradeType.HEAL_CHANCE):
-		spawn_chances["health"] += upgrades[Upgrade.UpgradeType.COIN_CHANCE]["level"] / 10.0
+		spawn_chances["health"] += upgrades[Upgrade.UpgradeType.HEAL_CHANCE]["level"] / 10.0
 		print("health chance: ", spawn_chances["health"])
 		
 	if upgrades.has(Upgrade.UpgradeType.SHIELD_CHANCE):
